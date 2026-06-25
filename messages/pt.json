@@ -1,0 +1,115 @@
+{
+  "Site": {
+    "title": "PortalJS Portal de Dados Abertos",
+    "description": "Descubra milhares de conjuntos de dados, publique os seus próprios e solicite dados através do Portal – uma plataforma de dados abertos suportada pelo PortalJS.",
+    "homeTitle": "Início"
+  },
+
+  "Common": {
+    "organization": "Organização",
+    "organizations": "Organizações",
+    "groups": "Grupos",
+    "group": "Grupo",
+    "dataset": "Conjunto de dados",
+    "datasets": "Conjuntos de dados",
+    "visualization": "Visualização",
+    "visualizations": "Visualizações",
+    "resource": "Recurso",
+    "resources": "Recursos",
+    "format": "Formato",
+    "formats": "Formatos",
+    "tag": "Etiqueta",
+    "tags": "Etiquetas",
+    "noData": "Nenhum dado encontrado",
+    "noResults": "Nenhum resultado encontrado",
+    "viewAll": "Ver tudo",
+    "metadata": "Metadados",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "exploreAll": "Explorar tudo",
+    "export": "Exportar",
+    "preview": "Visualizar",
+    "download": "Descarregar",
+    "viewDataset": "Ver conjunto de dados",
+    "viewVisualization": "Ver visualização",
+    "openVisualization": "Abrir visualização",
+    "api": "API",
+    "activityStream": "Fluxo de atividades",
+    "code": "Código",
+    "created": "Data de criação",
+    "updated": "Data de atualização",
+    "version": "Versão",
+    "license": "Licença",
+    "size": "Tamanho",
+    "close": "Fechar",
+    "searchPlaceholder": "Pesquisar...",
+    "showMore": "Mostrar mais",
+    "showLess": "Mostrar menos",
+    "clearAll": "Limpar tudo",
+    "loading": "A carregar...",
+    "loadingData": "A carregar dados...",
+    "settings": "Definições",
+    "pagination": "Paginação",
+    "checkAll": "Selecionar tudo",
+    "page": "Página",
+    "previous": "Anterior",
+    "next": "Seguinte",
+    "search": "Pesquisar"
+  },
+
+  "Dataset": {
+    "latest": "Últimos conjuntos de dados",
+    "datasetsCount": "{count, plural, one {# conjunto de dados} other {# conjuntos de dados}}",
+    "total": "Total de conjuntos de dados",
+    "resourcesTitle": "Dados e recursos ({count})",
+    "noResources": "Não há recursos disponíveis para este conjunto de dados."
+  },
+
+  "Activity": {
+    "error:": "Erro ao carregar o fluxo de atividades de {type}: {message}",
+    "notFound": "Nenhuma atividade encontrada."
+  },
+
+  "Home": {
+    "title": "Bem-vindo ao OpenData Portal",
+    "tagline": "Descubra, pesquise e aceda a conjuntos de dados públicos através do nosso portal de dados abertos suportado pela API do CKAN."
+  },
+
+  "OrganizationsPage": {
+    "description": "Explore a lista completa de organizações que partilham dados no nosso portal.",
+    "searchPlaceholder": "Pesquisar organizações...",
+    "noOrganizations": "Nenhuma organização encontrada"
+  },
+
+  "GroupsPage": {
+    "description": "Explore todos os grupos que organizam e selecionam conjuntos de dados por temas e áreas.",
+    "searchPlaceholder": "Pesquisar grupos...",
+    "noGroups": "Nenhum grupo encontrado"
+  },
+
+  "Search": {
+    "title": "Pesquisar conjuntos de dados",
+    "subtitle": "Encontre conjuntos de dados para explorar, analisar e descarregar.",
+    "filters": "Filtros",
+    "headerWithQuery": "Pesquisar {type} por \"{query}\"",
+    "headerCount": "{count, plural, one {# conjunto de dados} other {# conjuntos de dados}}",
+    "headerCountVisualizations": "{count, plural, one {# visualização} other {# visualizações}}",
+    "headerNoResults": "Nenhum resultado encontrado",
+    "headerShowing": "A mostrar {count} {type}",
+    "sortLabel": "Ordenar:",
+    "sortRelevance": "Relevância",
+    "sortLastModified": "Última modificação",
+    "sortNameAsc": "Nome (A–Z)",
+    "sortNameDesc": "Nome (Z–A)",
+    "searchPlaceholder": "Escreva para pesquisar..."
+  },
+
+  "Preview": {
+    "columns": "Colunas",
+    "searchColumnsPlaceholder": "Pesquisar colunas...",
+    "checkAllColumns": "Selecionar todas as colunas",
+    "noColumns": "Nenhuma coluna encontrada",
+    "rowsPerPage": "Linhas por página",
+    "pagination": "Página {page} de {total}"
+  }
+}
