@@ -48,6 +48,7 @@ export default function SearchHero() {
               onSubmit={(q) => {
                 setOptions({
                   query: q,
+                  offset: 0,
                 });
               }}
             />

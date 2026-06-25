@@ -27,12 +27,12 @@ This tasklist tracks implementation of all `_temp` features into `v2`. Check ite
 
 ## Phase 3: Dataset Search
 
-- [ ] Re-open `_temp/pages/search.tsx` and `v2/src/app/[locale]/search/page.tsx`.
-- [ ] Re-open `_temp/lib/queries/dataset.ts` and `v2/src/lib/ckan/dataset.ts`.
-- [ ] Preserve `v2` search UI and query-param behavior.
-- [ ] Ensure facets match `_temp`: groups, organization, res_format, tags.
-- [ ] Ensure dataset and visualization type switching works with target CKAN.
-- [ ] Validate search manually against live DMS.
+- [x] Re-open `_temp/pages/search.tsx` and `v2/src/app/[locale]/search/page.tsx`.
+- [x] Re-open `_temp/lib/queries/dataset.ts` and `v2/src/lib/ckan/dataset.ts`.
+- [x] Preserve `v2` search UI and query-param behavior.
+- [x] Ensure facets match `_temp`: groups, organization, res_format, tags.
+- [x] Ensure dataset and visualization type switching works with target CKAN.
+- [x] Validate search manually against live DMS.
 
 ## Phase 4: Dataset Detail and Reuse
 

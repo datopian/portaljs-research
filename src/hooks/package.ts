@@ -7,7 +7,7 @@ export function usePackageSearch(
   owner_org?: string
 ) {
   return useQuery({
-    queryKey: ["package_search", options],
+    queryKey: ["package_search", owner_org ?? null, options],
     queryFn: () =>
       searchDatasets({
         options,

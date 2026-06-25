@@ -56,16 +56,17 @@ export default function SearchResultsSection({
 
       {showSearchForm && (
         <div className="mb-6 space-y-4 sm:mb-8">
-          <SearchForm
-            value={options?.query}
-            placeholder="Search datasets, organizations, topics..."
-            onSubmit={(q) => {
-              setOptions({
-                query: q,
-              });
-            }}
-            onClear={clearAllFilters}
-          />
+            <SearchForm
+              value={options?.query}
+              placeholder="Search datasets, organizations, topics..."
+              onSubmit={(q) => {
+                setOptions({
+                  query: q,
+                  offset: 0,
+                });
+              }}
+              onClear={clearAllFilters}
+            />
         </div>
       )}
 

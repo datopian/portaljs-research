@@ -13,8 +13,8 @@ export default function SortBy() {
   const sortOptions = [
     { name: t("sortRelevance"), value: "score desc" },
     { name: t("sortLastModified"), value: "metadata_modified desc" },
-    { name: t("sortNameAsc"), value: "title asc" },
-    { name: t("sortNameDesc"), value: "title desc" },
+    { name: t("sortNameAsc"), value: "title_string asc" },
+    { name: t("sortNameDesc"), value: "title_string desc" },
   ];
 
   return (
