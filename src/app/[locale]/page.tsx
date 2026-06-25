@@ -32,8 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Home() {
   const t = await getTranslations();
   const querylessEnabled = isQuerylessEnabled();
-  const dms = process.env.NEXT_PUBLIC_DMS?.replace(/\/$/, "") ?? "";
-  const apiDocsUrl = dms ? `${dms}/api/3/docs` : "/search";
+  const apiDocsUrl =  `https://docs.ckan.org/en/2.11/api/index.html`;
   const requestDataHref =
     "mailto:data@example.com?subject=Open%20Data%20Request";
   const [
