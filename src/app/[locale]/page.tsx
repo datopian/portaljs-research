@@ -1,10 +1,12 @@
 import DatasetCard from "@/components/package/dataset/DatasetCard";
+import ReportCard from "@/components/reports/ReportCard";
 import SearchForm from "@/components/package/search/SearchForm";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
 import { searchDatasets } from "@/lib/ckan/dataset";
 import { getAllGroups } from "@/lib/ckan/group";
+import { getAllReports } from "@/lib/reports";
 import { isQuerylessEnabled } from "@/lib/queryless";
 import { toPublicGroupSlug } from "@/lib/portal-name";
 import { ArrowRight, Code2, FolderKanban, Mail } from "lucide-react";
@@ -72,6 +74,7 @@ export default async function Home() {
       ),
     )
     .slice(0, 4);
+  const reports = getAllReports().slice(0, 2);
   const stats = [
     {
       label: t("Common.datasets"),
@@ -86,7 +89,7 @@ export default async function Home() {
     {
       label: t("Common.groups"),
       value: statsResult.search_facets?.groups?.items?.length ?? 0,
-      href: "/groups",
+      href: "/topics",
     },
     ...(visualizationCount > 0
       ? [
@@ -117,7 +120,7 @@ export default async function Home() {
                 </h1>
                 <p className="max-w-xl text-[1rem] leading-7 text-muted-foreground sm:text-[1.05rem]">
                   Search datasets published across the portal and discover the
-                  latest information shared by organizations and groups.
+                  latest information shared by organizations and topics.
                 </p>
               </div>
             </div>
@@ -127,7 +130,7 @@ export default async function Home() {
                 querylessEnabled={querylessEnabled}
                 placeholder={
                   querylessEnabled
-                    ? "Ask a question about datasets, groups, or organizations..."
+                    ? "Ask a question about datasets, topics, or organizations..."
                     : "Search datasets, organizations, topics..."
                 }
               />
@@ -164,11 +167,81 @@ export default async function Home() {
                 className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
                 style={{ color: "var(--brand-accent)" }}
               >
+                Editorial
+              </span>
+
+              <Heading level={2} className="text-foreground font-display">
+                Reports
+              </Heading>
+              <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
+                Read data-driven narratives built from the datasets published in
+                the portal.
+              </p>
+            </div>
+
+            <Button asChild className="sm:ml-auto" variant="outline">
+              <Link href="/reports">{t("Common.exploreAll")}</Link>
+            </Button>
+          </div>
+
+          {reports.length === 0 ? (
+            <p className="text-muted-foreground">No reports published yet.</p>
+          ) : (
+            <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+              {reports.map((report) => (
+                <ReportCard key={report.slug} report={report} />
+              ))}
+            </div>
+          )}
+        </section>
+
+         <section className="">
+          <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
+            <div className="space-y-0">
+              <span
+                className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
+                style={{ color: "var(--brand-accent)" }}
+              >
+                Recent
+              </span>
+
+              <Heading level={2} className="text-foreground font-display">
+                Featured Datasets
+              </Heading>
+              <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
+                Explore the latest datasets updated across the portal.
+              </p>
+            </div>
+
+            <Button asChild className="sm:ml-auto" variant="outline">
+              <Link href="/search">{t("Common.exploreAll")}</Link>
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+            {datasets?.map((dataset) => (
+              <DatasetCard
+                key={dataset.id}
+                dataset={dataset}
+                linkClassName="h-full"
+                cardClassName="h-full"
+              />
+            ))}
+          </div>
+        </section>
+
+        <section className="">
+          <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
+            <div className="space-y-0">
+              <span
+                className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
+                style={{ color: "var(--brand-accent)" }}
+              >
                 Browse
               </span>
 
               <Heading level={2} className="text-foreground font-display">
-                Groups
+                Topics
               </Heading>
               <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
                 Explore thematic collections that organize datasets across the
@@ -177,7 +250,7 @@ export default async function Home() {
             </div>
 
             <Button asChild className="sm:ml-auto" variant="outline">
-              <Link href="/groups">{t("Common.exploreAll")}</Link>
+              <Link href="/topics">{t("Common.exploreAll")}</Link>
             </Button>
           </div>
 
@@ -190,7 +263,7 @@ export default async function Home() {
               return (
                 <Link
                   key={group.id}
-                  href={`/groups/${toPublicGroupSlug(group.name)}`}
+                  href={`/topics/${toPublicGroupSlug(group.name)}`}
                   className="group surface-panel flex h-full items-stretch overflow-hidden rounded-2xl bg-white transition duration-200 hover:-translate-y-0.5 hover:[border-color:var(--brand-border-tint)] hover:shadow-[0_18px_36px_-28px_rgba(37,99,235,0.3)]"
                 >
                   <div className="relative aspect-square w-22 shrink-0 border-r border-[color:var(--border)] bg-[color:color-mix(in_srgb,var(--brand-accent)_4%,white)] p-2.5 sm:w-32 sm:p-4">
@@ -243,40 +316,7 @@ export default async function Home() {
             })}
           </div>
         </section>
-        <section className="">
-          <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
-            <div className="space-y-0">
-              <span
-                className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
-                style={{ color: "var(--brand-accent)" }}
-              >
-                Recent
-              </span>
-
-              <Heading level={2} className="text-foreground font-display">
-                Featured Datasets
-              </Heading>
-              <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
-                Explore the latest datasets updated across the portal.
-              </p>
-            </div>
-
-            <Button asChild className="sm:ml-auto" variant="outline">
-              <Link href="/search">{t("Common.exploreAll")}</Link>
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-            {datasets?.map((dataset) => (
-              <DatasetCard
-                key={dataset.id}
-                dataset={dataset}
-                linkClassName="h-full"
-                cardClassName="h-full"
-              />
-            ))}
-          </div>
-        </section>
+       
 
         
 

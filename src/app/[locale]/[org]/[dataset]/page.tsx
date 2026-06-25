@@ -95,7 +95,7 @@ export default async function DatasetPage({ params }: DatasetPageProps) {
                 {dataset.groups.map((group) => (
                   <Link
                     key={group.id}
-                    href={`/groups/${toPublicGroupSlug(group.name)}`}
+                    href={`/topics/${toPublicGroupSlug(group.name)}`}
                     className="rounded-full border border-[color:var(--border)] bg-white px-2.5 py-1 text-xs font-medium text-foreground transition hover:[border-color:var(--brand-accent)] hover:[color:var(--brand-accent)]"
                   >
                     {group.display_name}

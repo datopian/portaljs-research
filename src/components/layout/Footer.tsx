@@ -43,8 +43,14 @@ export default function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="/groups" className="inline-flex items-center gap-1">
-                    {t("Common.groups")}
+                  <Link href="/reports" className="inline-flex items-center gap-1">
+                    {t("Common.reports")}
+                    <ArrowUpRight className="size-3.5" />
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/topics" className="inline-flex items-center gap-1">
+                    {t("Common.topics")}
                     <ArrowUpRight className="size-3.5" />
                   </Link>
                 </li>

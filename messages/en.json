@@ -7,10 +7,14 @@
   "Common": {
     "organization": "Organization",
     "organizations": "Organizations",
-    "groups": "Groups",
-    "group": "Group",
+    "groups": "Topics",
+    "group": "Topic",
+    "topic": "Topic",
+    "topics": "Topics",
     "dataset": "Dataset",
     "datasets": "Datasets",
+    "report": "Report",
+    "reports": "Reports",
     "visualization": "Visualization",
     "visualizations": "Visualizations",
     "resource": "Resource",
@@ -76,9 +80,14 @@
     "noOrganizations": "No organizations found"
   },
   "GroupsPage": {
-    "description": "Explore all groups that organize and curate datasets across topics and themes.",
-    "searchPlaceholder": "Search groups...",
-    "noGroups": "No groups found"
+    "description": "Explore all topics that organize and curate datasets across the portal.",
+    "searchPlaceholder": "Search topics...",
+    "noGroups": "No topics found"
+  },
+  "TopicsPage": {
+    "description": "Explore all topics that organize and curate datasets across the portal.",
+    "searchPlaceholder": "Search topics...",
+    "noTopics": "No topics found"
   },
   "Search": {
     "title": "Search Datasets",

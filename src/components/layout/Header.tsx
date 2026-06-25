@@ -17,8 +17,9 @@ export default function Header() {
 
   const menu = [
     { href: "/search", label: t("Common.datasets") },
+    { href: "/reports", label: t("Common.reports") },
     { href: "/organizations", label: t("Common.organizations") },
-    { href: "/groups", label: t("Common.groups") },
+    { href: "/topics", label: t("Common.topics") },
   ];
 
   useEffect(() => {
@@ -44,7 +45,7 @@ export default function Header() {
             </div>
           </Link>
 
-          <nav className="ml-10 mr-auto hidden items-center gap-6 lg:flex" aria-label="Primary">
+          <nav className="ml-10 ml-auto hidden items-center gap-6 lg:flex" aria-label="Primary">
             {menu.map((item) => (
               <Link
                 key={item.href}
@@ -61,7 +62,7 @@ export default function Header() {
             ))}
           </nav>
 
-          <div className="ml-auto hidden items-center gap-3 lg:flex">
+          <div className="hidden items-center gap-3 lg:flex">
 
             <LanguageSwitcher />
           </div>

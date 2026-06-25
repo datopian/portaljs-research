@@ -38,7 +38,7 @@ export default async function DatasetResources({
   return (
     <div className="space-y-4">
       {resources.map((resource) => {
-        const resourceHref = `/@${organization}/${dataset}/${resource.id}`;
+        const resourceHref = `/@${organization}/${dataset}/r/${resource.id}`;
         const updatedDate = getResourceUpdatedDate(resource);
         const formatLabel = resource.format?.toUpperCase() || "--";
 

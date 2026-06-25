@@ -14,15 +14,16 @@ This tasklist tracks implementation of all `_temp` features into `v2`. Check ite
 
 ## Phase 2: Routing
 
-- [ ] Keep canonical resource route as `/@org/dataset/r/resourceId`.
-- [ ] Update `v2` dataset resource links to use `/r/`.
-- [ ] Update resource page implementation to use old canonical `/r/` route shape.
-- [ ] Update route generation and accessibility dynamic route discovery to use `/r/`.
-- [ ] Add real `/topics` page with Topics label.
-- [ ] Add real `/topics/[topicName]` page with Topics label and slug.
-- [ ] Add `/reports` index route.
-- [ ] Add `/reports/[slug]` detail route.
-- [ ] Restore `/ai-terms-of-use`.
+- [x] Keep canonical resource route as `/@org/dataset/r/resourceId`.
+- [x] Update `v2` dataset resource links to use `/r/`.
+- [x] Update resource page implementation to use old canonical `/r/` route shape.
+- [x] Update route generation and accessibility dynamic route discovery to use `/r/`.
+- [x] Add real `/topics` page with Topics label.
+- [x] Add real `/topics/[topicName]` page with Topics label and slug.
+- [x] Standardize public copy and navigation on `Topics` while keeping `/groups` only as a compatibility alias.
+- [x] Add `/reports` index route.
+- [x] Add `/reports/[slug]` detail route.
+- [x] Restore `/ai-terms-of-use`.
 
 ## Phase 3: Dataset Search
 
@@ -68,18 +69,18 @@ This tasklist tracks implementation of all `_temp` features into `v2`. Check ite
 - [ ] Add activity stream visibility env var with default `false`.
 - [ ] Hide activity streams by default.
 - [ ] Show activity streams only when the env var enables them.
-- [ ] Implement topics pages using group-backed data while keeping Topics labels.
+- [x] Implement topics pages using group-backed data while keeping Topics labels.
 
 ## Phase 7: Reports
 
-- [ ] Migrate `_temp/content/stories` content into the new reports content location.
-- [ ] Preserve `_temp` MDX/frontmatter behavior.
-- [ ] Preserve story-specific chart component mappings from `_temp`.
-- [ ] Use `Reports` label and `/reports` slug.
-- [ ] Do not localize reports for now.
-- [ ] Render content in the language provided in `/content`.
-- [ ] Add Reports section to the homepage.
-- [ ] Preserve related dataset links.
+- [x] Migrate `_temp/content/stories` content into the new reports content location.
+- [x] Preserve `_temp` MDX/frontmatter behavior.
+- [x] Preserve story-specific chart component mappings from `_temp`.
+- [x] Use `Reports` label and `/reports` slug.
+- [x] Do not localize reports for now.
+- [x] Render content in the language provided in `/content`.
+- [x] Add Reports section to the homepage.
+- [x] Preserve related dataset links.
 
 ## Phase 8: Homepage
 
@@ -95,8 +96,8 @@ This tasklist tracks implementation of all `_temp` features into `v2`. Check ite
 - [ ] Use `NEXT_PUBLIC_QUERYLESS_ENABLED` as the public enablement flag.
 - [ ] Keep Queryless server env vars: `QUERYLESS_URL`, `QUERYLESS_TOKEN`, `QUERYLESS_MODEL`.
 - [ ] Update Queryless route instructions to use canonical `/r/` resource URLs.
-- [ ] Restore `/ai-terms-of-use`.
-- [ ] Link Queryless footer to `/ai-terms-of-use`.
+- [x] Restore `/ai-terms-of-use`.
+- [x] Link Queryless footer to `/ai-terms-of-use`.
 - [ ] Preserve streaming, rate limits, daily limits, Markdown rendering, and Vega rendering.
 - [ ] Validate Queryless on home, search, dataset, resource, organization, group, and topic pages.
 

@@ -80,7 +80,8 @@ export async function POST(req: NextRequest) {
     "  dataset: /@{org}/{name}",
     "  resource: /@{org}/{dataset}/r/{resource}",
     "  organization: /@{name}",
-    "  group: /groups/{name}",
+    "  topic: /topics/{name}",
+    "  topic: /topics/{name}",
     "  search: /search",
   ].join("\n");
 

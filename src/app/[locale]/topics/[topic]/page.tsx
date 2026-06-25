@@ -1,0 +1,138 @@
+import { SearchStateProvider } from "@/components/package/search/SearchContext";
+import { notFound } from "next/navigation";
+import SearchResultsSection from "@/components/package/search/SearchResultsSection";
+import Page from "@/components/layout/Page";
+import { formatDateToDDMMYYYY } from "@/lib/utils";
+import { getGroup } from "@/lib/ckan/group";
+import ActivityStream from "@/components/activity/ActivityStream";
+import { getTranslations } from "next-intl/server";
+import { Metadata } from "next";
+import { buildLocalizedMetadata } from "@/lib/seo";
+import { getCkanGroupNameCandidates, toPublicGroupSlug } from "@/lib/portal-name";
+
+type TopicPageParams = {
+  locale: string;
+  topic: string;
+};
+
+type TopicPageProps = {
+  params: Promise<TopicPageParams>;
+};
+
+async function getTopicByPublicSlug(topicSlug: string) {
+  const candidates = getCkanGroupNameCandidates(topicSlug);
+
+  for (const candidate of candidates) {
+    const group = await getGroup({
+      name: candidate,
+      include_datasets: true,
+    });
+
+    if (group) {
+      return group;
+    }
+  }
+
+  return null;
+}
+
+async function getTopicForMetadata(topicSlug: string) {
+  const candidates = getCkanGroupNameCandidates(topicSlug);
+
+  for (const candidate of candidates) {
+    const group = await getGroup({
+      name: candidate,
+      include_datasets: false,
+    });
+
+    if (group) {
+      return group;
+    }
+  }
+
+  return null;
+}
+
+export const revalidate = 60;
+
+export async function generateStaticParams(): Promise<Array<{ topic: string }>> {
+  return [];
+}
+
+export default async function TopicPage({ params }: TopicPageProps) {
+  const { locale, topic } = await params;
+  const t = await getTranslations({ locale });
+  const publicTopicSlug = decodeURIComponent(topic);
+
+  if (!publicTopicSlug) {
+    return notFound();
+  }
+  const topicData = await getTopicByPublicSlug(publicTopicSlug);
+
+  if (!topicData) {
+    return notFound();
+  }
+
+  return (
+    <Page
+      breadcrumb={{
+        items: [
+          {
+            title: t("Common.topics"),
+            href: "/topics",
+          },
+        ],
+      }}
+      title={topicData.title}
+      description={topicData.description}
+      metadata={[
+        {
+          title: t("Common.created"),
+          value: formatDateToDDMMYYYY(topicData.created ?? ""),
+        },
+        {
+          title: t("Dataset.total"),
+          value: topicData.package_count ?? 0,
+        },
+      ]}
+      tabs={[
+        {
+          title: t("Common.datasets"),
+          id: "datasets",
+          content: (
+            <SearchStateProvider defaultGroup={topicData.name}>
+              <SearchResultsSection embedded showSearchForm />
+            </SearchStateProvider>
+          ),
+        },
+        {
+          title: t("Common.activityStream"),
+          id: "activity",
+          content: (
+            <div>
+              <ActivityStream type="group" id={topicData.name} />
+            </div>
+          ),
+        },
+      ]}
+    />
+  );
+}
+
+export async function generateMetadata({
+  params,
+}: TopicPageProps): Promise<Metadata> {
+  const { locale, topic } = await params;
+  const publicTopicSlug = decodeURIComponent(topic);
+  const topicData = await getTopicForMetadata(publicTopicSlug);
+
+  const title = topicData?.title ?? publicTopicSlug;
+  const description = topicData?.description ?? "";
+
+  return buildLocalizedMetadata({
+    locale,
+    pathname: `/topics/${toPublicGroupSlug(topicData?.name ?? publicTopicSlug)}`,
+    title,
+    description,
+  });
+}

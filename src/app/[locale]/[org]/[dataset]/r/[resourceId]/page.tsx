@@ -15,7 +15,7 @@ import ResourceSidebar from "@/components/package/resource/ResourceSidebar";
 export const revalidate = 60;
 
 export async function generateStaticParams(): Promise<
-  Array<{ org: string; dataset: string; resource: string }>
+  Array<{ org: string; dataset: string; resourceId: string }>
 > {
   return [];
 }
@@ -24,7 +24,7 @@ type ResourcePageParams = {
   locale: string;
   org: string;
   dataset: string;
-  resource: string;
+  resourceId: string;
 };
 
 type PageProps = {
@@ -38,7 +38,7 @@ export default async function ResourcePage({ params }: PageProps) {
 
   const {
     locale,
-    resource: resourceId,
+    resourceId,
     dataset: datasetName,
     org,
   } = await params;
@@ -52,7 +52,7 @@ export default async function ResourcePage({ params }: PageProps) {
 
     let orgName = decodeURIComponent(org);
 
-    if(!orgName.includes("@")) {
+    if (!orgName.includes("@")) {
       return notFound();
     }
 
@@ -79,15 +79,13 @@ export default async function ResourcePage({ params }: PageProps) {
       return notFound();
     }
 
-    if(dataset?.organization?.name !== orgName) {
+    if (dataset.organization?.name !== orgName) {
       return notFound();
     }
 
-    if(resource.package_id !== dataset.id) {
+    if (resource.package_id !== dataset.id) {
       return notFound();
     }
-
-    
   } catch {
     return notFound();
   }
@@ -113,7 +111,6 @@ export default async function ResourcePage({ params }: PageProps) {
       title={resource.name ?? ""}
       description={resource.description}
       sidebar={<ResourceSidebar resource={resource} dataset={dataset} />}
-
       tabs={[
         ...(resource.format && supportsPreview(resource)
           ? [
@@ -137,14 +134,14 @@ export default async function ResourcePage({ params }: PageProps) {
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const { locale, org, dataset, resource } = await params;
-  const resData = await ckan().getResourceMetadata(resource);
-  const resourceName = resData?.name ?? decodeURIComponent(resource);
+  const { locale, org, dataset, resourceId } = await params;
+  const resData = await ckan().getResourceMetadata(resourceId);
+  const resourceName = resData?.name ?? decodeURIComponent(resourceId);
   const description = resData?.description ?? "";
 
   return buildLocalizedMetadata({
     locale,
-    pathname: `/${decodeURIComponent(org)}/${dataset}/${resource}`,
+    pathname: `/${decodeURIComponent(org)}/${dataset}/r/${resourceId}`,
     title: resourceName,
     description,
   });

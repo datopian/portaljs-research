@@ -12,6 +12,7 @@ const APP_DIR_CANDIDATES = [path.join(ROOT, "src", "app"), path.join(ROOT, "app"
 const APP_DIR = APP_DIR_CANDIDATES.find(existsDir);
 
 const OUT = path.join(ROOT, "public", "__routes.json");
+const REPORTS_DIR = path.join(ROOT, "content", "reports");
 
 const PAGE_RE = /^page\.(js|jsx|ts|tsx)$/;
 
@@ -19,7 +20,12 @@ const CKAN_URL = process.env.NEXT_PUBLIC_DMS?.trim() || "";
 const CKAN_SORT =  "metadata_modified desc";
 
 const DEFAULT_LOCALE = process.env.NEXT_PUBLIC_I18N_DEFAULT_LOCALE?.trim() || "en";
-const DEFAULT_LOCALE_UNPREFIXED = process.env.I18N_DEFAULT_UNPREFIXED === "true";
+const SUPPORTED_LOCALES = (process.env.NEXT_PUBLIC_I18N_SUPPORTED_LOCALES ?? "en")
+  .split(",")
+  .map((locale) => locale.trim())
+  .filter(Boolean);
+const DEFAULT_LOCALE_UNPREFIXED =
+  process.env.I18N_DEFAULT_UNPREFIXED === "true" || SUPPORTED_LOCALES.length === 1;
 
 console.log("DMS: "+CKAN_URL)
 
@@ -189,6 +195,17 @@ function appendUnique(routes, extraRoutes) {
   return Array.from(set).sort((a, b) => a.length - b.length || a.localeCompare(b));
 }
 
+function getReportRoutes() {
+  if (!existsDir(REPORTS_DIR)) {
+    return [];
+  }
+
+  return fs
+    .readdirSync(REPORTS_DIR)
+    .filter((file) => file.endsWith(".mdx"))
+    .map((file) => `/reports/${file.replace(/\.mdx$/, "")}`);
+}
+
 if (!existsDir(APP_DIR)) {
   console.error(`Could not find app directory at: ${APP_DIR}`);
   process.exit(1);
@@ -200,15 +217,17 @@ const staticRoutes = collectRoutes();
 const sample = await fetchFirstDatasetAndResource();
 
 let routes = staticRoutes;
+routes = appendUnique(routes, getReportRoutes());
 
 if (sample) {
   const { orgName, datasetName, firstResourceId } = sample;
+  const localePrefix = DEFAULT_LOCALE_UNPREFIXED ? "" : `/${DEFAULT_LOCALE}`;
 
-  const datasetRoute = `/${DEFAULT_LOCALE}/@${orgName}/${datasetName}`;
+  const datasetRoute = `${localePrefix}/@${orgName}/${datasetName}`;
   const extras = [datasetRoute];
 
   if (firstResourceId) {
-    extras.push(`/${DEFAULT_LOCALE}/@${orgName}/${datasetName}/${firstResourceId}`);
+    extras.push(`${localePrefix}/@${orgName}/${datasetName}/r/${firstResourceId}`);
   }
 
   routes = appendUnique(routes, extras);

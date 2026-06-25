@@ -23,7 +23,7 @@ export default async function DatasetInfo({ dataset }: { dataset: Dataset }) {
         <div>
           {dataset.groups?.map((g, i) => (
             <React.Fragment key={g.id}>
-              <Link className="underline " href={`/groups/${toPublicGroupSlug(g.name)}`}>
+              <Link className="underline " href={`/topics/${toPublicGroupSlug(g.name)}`}>
                 {g.display_name}
               </Link>
               {i < (dataset?.groups ?? [])?.length - 1 ? ", " : ""}

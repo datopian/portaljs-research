@@ -1,0 +1,16 @@
+{
+  "routes": [
+    "/",
+    "/groups",
+    "/search",
+    "/topics",
+    "/reports",
+    "/organizations",
+    "/reports/great-decoupling",
+    "/reports/biology-got-cheap-medicine-didnt",
+    "/@climate-research-institute/smallholder-adaptation-to-seasonal-rainfall-variability-in-east-africa",
+    "/@climate-research-institute/smallholder-adaptation-to-seasonal-rainfall-variability-in-east-africa/r/23786ef4-2444-4924-9042-b82652466d43"
+  ],
+  "generatedAt": "2026-06-25T18:48:06.023Z",
+  "source": "app-router"
+}

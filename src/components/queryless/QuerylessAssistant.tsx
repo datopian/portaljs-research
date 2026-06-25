@@ -65,10 +65,16 @@ function getPageDirective(pathname: string) {
 
   if (cleanPath === "/") return "home";
   if (cleanPath === "/search") return "search";
-  if (cleanPath === "/groups" || cleanPath === "/organizations") return "search";
+  if (cleanPath === "/groups" || cleanPath === "/organizations" || cleanPath === "/topics") {
+    return "search";
+  }
 
   if (first === "groups" && segments[1]) {
     return `group/${segments[1]}`;
+  }
+
+  if (first === "topics" && segments[1]) {
+    return `topic/${segments[1]}`;
   }
 
   if (first.startsWith("@")) {
@@ -112,7 +118,10 @@ function getFallbackViewingNotice(pageDirective: string) {
     return `Viewing organization ${toTitleCaseFromSlug(pageDirective.replace("organization/", ""))}`;
   }
   if (pageDirective.startsWith("group/")) {
-    return `Viewing group ${toTitleCaseFromSlug(pageDirective.replace("group/", ""))}`;
+    return `Viewing topic ${toTitleCaseFromSlug(pageDirective.replace("group/", ""))}`;
+  }
+  if (pageDirective.startsWith("topic/")) {
+    return `Viewing topic ${toTitleCaseFromSlug(pageDirective.replace("topic/", ""))}`;
   }
   if (pageDirective === "home") return "Viewing home";
   return "Viewing search";
@@ -826,7 +835,7 @@ export default function QuerylessAssistant() {
         return;
       }
       if (context.pageDirective.startsWith("group/")) {
-        setViewingNotice(`Viewing group ${titleText}`);
+        setViewingNotice(`Viewing topic ${titleText}`);
       }
     };
 
@@ -1105,7 +1114,14 @@ export default function QuerylessAssistant() {
               </div>
 
               <p className="mt-3 text-center text-xs text-muted-foreground">
-                Queryless AI can make mistakes. Use it as a helpful guide, not a source of truth.
+                Queryless AI can make mistakes. Use it as a helpful guide, not a
+                source of truth.{" "}
+                <Link
+                  href="/ai-terms-of-use"
+                  className="font-medium underline underline-offset-4 inline-block"
+                >
+                  AI Terms of Use
+                </Link>
               </p>
             </div>
           </aside>
