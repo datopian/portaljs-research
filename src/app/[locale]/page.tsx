@@ -117,7 +117,7 @@ export default async function Home() {
           className="right-[-1.5rem] top-0"
         />
 
-        <Container className="relative z-10 flex min-h-[calc(100vh-96px)] flex-col px-4 pt-8 pb-8">
+        <Container className="relative z-10 flex min-h-[calc(100vh-200px)] flex-col px-4 pt-8 pb-8">
           <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center text-center">
             <div className="relative h-18 w-18 sm:h-20 sm:w-20">
               <Image
@@ -256,18 +256,37 @@ export default async function Home() {
               const groupTitle =
                 group.display_name || group.title || group.name;
               const datasetCount = group.package_count ?? 0;
-
+              const imageUrl = group.image_display_url || group.image_url;
               return (
                 <Link
                   key={group.id}
                   href={`/topics/${toPublicGroupSlug(group.name)}`}
-                  className="group surface-panel flex h-full min-h-[255px] flex-col rounded-[1.6rem] bg-white px-6 py-7 transition duration-200 hover:-translate-y-0.5 hover:[border-color:var(--brand-border-tint)] hover:shadow-[0_18px_36px_-28px_rgba(37,99,235,0.3)]"
+                  className="group surface-panel flex h-full min-h-[200px] flex-col rounded-[1.6rem] bg-white px-5 py-6 transition duration-200 hover:-translate-y-0.5 hover:[border-color:var(--brand-border-tint)] hover:shadow-[0_18px_36px_-28px_rgba(37,99,235,0.3)]"
                 >
                   <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[color:color-mix(in_srgb,var(--brand-accent)_4%,white)] text-foreground shadow-[0_18px_36px_-30px_rgba(15,23,42,0.2)]">
-                    <FolderKanban className="size-8 stroke-[1.8] text-accent" />
+                    {imageUrl ? (
+                      <div className="flex h-full w-full items-center justify-center">
+                        <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[color:var(--brand-accent)] shadow-[var(--shadow-soft)] sm:h-16 sm:w-16 sm:rounded-2xl">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={imageUrl}
+                            alt={groupTitle}
+                            width={256}
+                            height={256}
+                            className="h-full w-full object-contain p-2 sm:p-3"
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex h-full w-full items-center justify-center">
+                        <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[color:var(--brand-accent)] shadow-[var(--shadow-soft)] sm:h-16 sm:w-16 sm:rounded-2xl">
+                          <FolderKanban className="size-6 sm:size-8" />
+                        </div>
+                      </div>
+                    )}
                   </div>
 
-                  <div className="mt-6 flex flex-1 flex-col">
+                  <div className="mt-4 flex flex-1 flex-col">
                     <h3 className="line-clamp-2 text-[1.05rem] font-semibold leading-6 tracking-tight text-foreground">
                       {groupTitle}
                     </h3>
@@ -277,7 +296,7 @@ export default async function Home() {
                       })}
                     </p>
 
-                    <div className="mt-auto pt-7">
+                    <div className="mt-auto pt-6">
                       <span className="inline-flex text-sm items-center gap-2 font-medium text-primary transition group-hover:gap-2.5">
                         View collection
                         <ArrowRight className="size-6" />
@@ -324,126 +343,127 @@ export default async function Home() {
           )}
         </section>
         <section className="mb-12">
-  <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
-    <div className="space-y-0">
-      <span
-        className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
-        style={{ color: "var(--brand-accent)" }}
-      >
-        Tools
-      </span>
+          <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
+            <div className="space-y-0">
+              <span
+                className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
+                style={{ color: "var(--brand-accent)" }}
+              >
+                Tools
+              </span>
 
-      <Heading level={2} className="font-display text-foreground">
-        More ways to use the portal
-      </Heading>
+              <Heading level={2} className="font-display text-foreground">
+                More ways to use the portal
+              </Heading>
 
-      <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
-        Request new datasets or connect directly through the API to build apps,
-        workflows, and dashboards.
-      </p>
-    </div>
-  </div>
+              <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
+                Request new datasets or connect directly through the API to
+                build apps, workflows, and dashboards.
+              </p>
+            </div>
+          </div>
 
-  <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
-    <div className="relative overflow-hidden rounded-3xl border border-[color:color-mix(in_srgb,var(--brand-accent)_45%,white)] px-6 py-6 sm:px-8 sm:py-8">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(135deg, color-mix(in srgb, var(--brand-accent) 88%, black) 0%, var(--brand-accent) 52%, color-mix(in srgb, var(--brand-accent) 78%, white) 100%)",
-        }}
-      />
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
+            <div className="relative overflow-hidden rounded-3xl border border-[color:color-mix(in_srgb,var(--brand-accent)_45%,white)] px-6 py-6 sm:px-8 sm:py-8">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(135deg, color-mix(in srgb, var(--brand-accent) 88%, black) 0%, var(--brand-accent) 52%, color-mix(in srgb, var(--brand-accent) 78%, white) 100%)",
+                }}
+              />
 
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-60"
-        style={{
-          background:
-            "radial-gradient(circle at top right, color-mix(in srgb, white 24%, transparent) 0%, transparent 34%)",
-        }}
-      />
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 opacity-60"
+                style={{
+                  background:
+                    "radial-gradient(circle at top right, color-mix(in srgb, white 24%, transparent) 0%, transparent 34%)",
+                }}
+              />
 
-      <div className="relative flex h-full flex-col gap-5">
-        <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/16 text-white shadow-[var(--shadow-soft)] ring-1 ring-white/20 backdrop-blur-sm">
-          <Mail className="size-5" />
-        </div>
+              <div className="relative flex h-full flex-col gap-5">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/16 text-white shadow-[var(--shadow-soft)] ring-1 ring-white/20 backdrop-blur-sm">
+                  <Mail className="size-5" />
+                </div>
 
-        <div className="space-y-2">
-          <span className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-white/75">
-            Request data
-          </span>
+                <div className="space-y-2">
+                  <span className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-white/75">
+                    Request data
+                  </span>
 
-          <h3 className="text-[1.8rem] font-semibold tracking-tight text-white">
-            Need a dataset that is not here yet?
-          </h3>
+                  <h3 className="text-[1.8rem] font-semibold tracking-tight text-white">
+                    Need a dataset that is not here yet?
+                  </h3>
 
-          <p className="max-w-xl text-[0.98rem] leading-7 text-white/78">
-            Send a request and let the data team know what information would be
-            most useful to publish next.
-          </p>
-        </div>
+                  <p className="max-w-xl text-[0.98rem] leading-7 text-white/78">
+                    Send a request and let the data team know what information
+                    would be most useful to publish next.
+                  </p>
+                </div>
 
-        <div className="mt-auto">
-          <Button
-            asChild
-            className="!bg-white !text-[color:var(--brand-accent)] hover:!bg-white/92"
-          >
-            <a href={requestDataHref}>
-              Request data
-              <ArrowRight className="size-4" />
-            </a>
-          </Button>
-        </div>
-      </div>
-    </div>
+                <div className="mt-auto">
+                  <Button
+                    asChild
+                    className="!bg-white !text-[color:var(--brand-accent)] hover:!bg-white/92"
+                  >
+                    <a href={requestDataHref}>
+                      Request data
+                      <ArrowRight className="size-4" />
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </div>
 
-    <div className="surface-panel relative overflow-hidden rounded-3xl px-6 py-6 sm:px-8 sm:py-8">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(135deg, color-mix(in srgb, var(--brand-accent) 4%, white) 0%, white 52%)",
-        }}
-      />
+            <div className="surface-panel relative overflow-hidden rounded-3xl px-6 py-6 sm:px-8 sm:py-8">
+              <div
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0"
+                style={{
+                  background:
+                    "linear-gradient(135deg, color-mix(in srgb, var(--brand-accent) 4%, white) 0%, white 52%)",
+                }}
+              />
 
-      <div className="relative flex h-full flex-col gap-5">
-        <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[color:var(--brand-accent)] shadow-[var(--shadow-soft)]">
-          <Code2 className="size-5" />
-        </div>
+              <div className="relative flex h-full flex-col gap-5">
+                <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[color:var(--brand-accent)] shadow-[var(--shadow-soft)]">
+                  <Code2 className="size-5" />
+                </div>
 
-        <div className="space-y-2">
-          <span
-            className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
-            style={{ color: "var(--brand-accent)" }}
-          >
-            API
-          </span>
+                <div className="space-y-2">
+                  <span
+                    className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
+                    style={{ color: "var(--brand-accent)" }}
+                  >
+                    API
+                  </span>
 
-          <h3 className="text-[1.8rem] font-semibold tracking-tight text-foreground">
-            Build with the portal API
-          </h3>
+                  <h3 className="text-[1.8rem] font-semibold tracking-tight text-foreground">
+                    Build with the portal API
+                  </h3>
 
-          <p className="max-w-xl text-[0.98rem] leading-7 text-muted-foreground">
-            Explore the Swagger documentation and connect applications,
-            workflows, or dashboards directly to portal data.
-          </p>
-        </div>
+                  <p className="max-w-xl text-[0.98rem] leading-7 text-muted-foreground">
+                    Explore the Swagger documentation and connect applications,
+                    workflows, or dashboards directly to portal data.
+                  </p>
+                </div>
 
-        <div className="mt-auto">
-          <Button asChild variant="outline">
-            <a href={apiDocsUrl} target="_blank" rel="noreferrer">
-              Open API docs
-              <ArrowRight className="size-4" />
-            </a>
-          </Button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+                <div className="mt-auto">
+                  <Button asChild variant="outline">
+                    <a href={apiDocsUrl} target="_blank" rel="noreferrer">
+                      Open API docs
+                      <ArrowRight className="size-4" />
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
       </Container>
     </div>
   );
 }
+
