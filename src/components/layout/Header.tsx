@@ -7,7 +7,7 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "./LanguageSwitcher";
-import Image from "next/image";
+import PortalLogo from "./PortalLogo";
 
 export default function Header() {
   const loginUrl = "https://cloud.portaljs.com/auth/signin";
@@ -34,15 +34,7 @@ export default function Header() {
       <Container className="max-w-[1380px]">
         <div className="flex min-h-17 items-center gap-3 pt-2.5">
           <Link href="/" className="min-w-0 shrink-0">
-            <div className="flex items-center gap-3">
-              <Image
-                src="/images/logos/MainLogo.svg"
-                alt="Research Portal"
-                width={240}
-                height={72}
-                className=""
-              />
-            </div>
+            <PortalLogo size="sm" />
           </Link>
 
           <nav className="ml-10 ml-auto hidden items-center gap-6 lg:flex" aria-label="Primary">

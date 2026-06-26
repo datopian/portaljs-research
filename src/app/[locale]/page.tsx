@@ -1,15 +1,23 @@
+import Image from "next/image";
 import DatasetCard from "@/components/package/dataset/DatasetCard";
+import HomePromptChips from "@/components/home/HomePromptChips";
 import ReportCard from "@/components/reports/ReportCard";
 import SearchForm from "@/components/package/search/SearchForm";
 import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
+import { HeroAbstractVisual } from "@/components/layout/PageHero";
 import { searchDatasets } from "@/lib/ckan/dataset";
 import { getAllGroups } from "@/lib/ckan/group";
 import { getAllReports } from "@/lib/reports";
 import { isQuerylessEnabled } from "@/lib/queryless";
 import { toPublicGroupSlug } from "@/lib/portal-name";
-import { ArrowRight, Code2, FolderKanban, Mail } from "lucide-react";
+import {
+  ArrowRight,
+  Code2,
+  FolderKanban,
+  Mail,
+} from "lucide-react";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -32,9 +40,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function Home() {
   const t = await getTranslations();
   const querylessEnabled = isQuerylessEnabled();
-  const apiDocsUrl =  `https://docs.ckan.org/en/2.11/api/index.html`;
+  const apiDocsUrl = "https://docs.ckan.org/en/2.11/api/index.html";
   const requestDataHref =
     "mailto:data@example.com?subject=Open%20Data%20Request";
+  const suggestedPrompts = [
+    "Compare GDP trends since 2000",
+    "Show population growth by country",
+    "Track daily oil prices over time",
+  ];
+
   const [
     featuredDatasetsResult,
     statsResult,
@@ -64,6 +78,7 @@ export default async function Home() {
     }),
     getAllGroups(),
   ]);
+
   const datasets = featuredDatasetsResult.datasets;
   const visualizationCount = visualizationsResult.count ?? 0;
   const groups = [...allGroups]
@@ -103,28 +118,45 @@ export default async function Home() {
 
   return (
     <div>
-      <section className="hero-surface border-[color:var(--border)]">
-        <Container className="pt-10 pb-0  sm:pt-14">
-          <div className="grid gap-7 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-end">
-            <div className="space-y-3.5">
-              <span
-                className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
-                style={{ color: "var(--brand-accent)" }}
-              >
-                Explore open data
-              </span>
-              <div className="max-w-2xl space-y-3.5">
-                <h1 className="font-display text-[2.7rem]  leading-[1.02] tracking-tight text-foreground sm:text-[3.35rem]">
-                  Find, explore, and reuse public data
+      <section className="hero-surface relative overflow-hidden">
+        <HeroAbstractVisual
+          intensity="soft"
+          align="right"
+          wrapperClassName="inset-y-auto bottom-0 right-0 h-[18rem] w-[24rem] lg:block xl:h-[20rem] xl:w-[30rem]"
+          className="top-auto bottom-0"
+        />
+
+        <Container className="relative z-10 flex min-h-[calc(100vh-96px)] flex-col px-4 pt-8 pb-8">
+          <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center text-center">
+            <div className="relative h-18 w-18 sm:h-20 sm:w-20">
+              <Image
+                src="/images/logos/MainLogoSymbol.svg"
+                alt="Research Portal"
+                fill
+                className="object-contain"
+                priority
+              />
+            </div>
+
+            <div className="mt-6 space-y-4">
+              <div className="space-y-4">
+                <h1 className="text-[2.5rem] font-[900] leading-[0.96] tracking-tight text-foreground sm:text-[3.8rem] lg:text-[58px]">
+                  <span className="block">Research Data</span>
+                  <span
+                    className="mt-1 block"
+                    style={{ color: "var(--brand-accent)" }}
+                  >
+                    Intelligence
+                  </span>
                 </h1>
-                <p className="max-w-xl text-[1rem] leading-7 text-muted-foreground sm:text-[1.05rem]">
-                  Search datasets published across the portal and discover the
-                  latest information shared by organizations and topics.
+                <p className="mx-auto max-w-2xl text-[1rem] leading-[1.55] text-muted-foreground sm:text-[1.08rem]">
+                  Explore academic and scientific datasets. Ask anything in
+                  plain English.
                 </p>
               </div>
             </div>
 
-            <div>
+            <div className="mt-8 w-full max-w-3xl">
               <SearchForm
                 querylessEnabled={querylessEnabled}
                 placeholder={
@@ -132,69 +164,45 @@ export default async function Home() {
                     ? "Ask a question about datasets, topics, or organizations..."
                     : "Search datasets, organizations, topics..."
                 }
+                querylessLabel="Ask AI"
               />
+            </div>
 
-              <div className="mt-5 flex flex-wrap gap-3">
-                {stats.map((stat) => (
-                  <Link
-                    key={stat.label}
-                    href={stat.href}
-                    className="group inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] bg-white px-4 py-2.5 text-sm text-foreground shadow-[var(--shadow-soft)] transition hover:[border-color:var(--brand-accent)] hover:[color:var(--brand-accent)]"
+            <div className="mt-8 w-full max-w-3xl">
+              <HomePromptChips
+                prompts={suggestedPrompts}
+                querylessEnabled={querylessEnabled}
+              />
+            </div>
+          </div>
+
+          <div className="mx-auto mt-10 w-full max-w-5xl border-t border-[color:color-mix(in_srgb,var(--border)_75%,transparent)] pt-6">
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 sm:gap-x-10">
+              {stats.map((stat) => (
+                <Link
+                  key={stat.label}
+                  href={stat.href}
+                  className="group flex flex-col items-center justify-center gap-1 text-center transition hover:text-primary"
+                >
+                  <span
+                    className="text-3xl font-semibold tracking-tight sm:text-4xl"
+                    style={{ color: "var(--brand-accent)" }}
                   >
-                    <span
-                      className="font-semibold tracking-tight"
-                      style={{ color: "var(--brand-accent)" }}
-                    >
-                      {stat.value}
-                    </span>
-                    <span className="font-medium group-hover:text-primary text-foreground/88">
-                      {stat.label}
-                    </span>
-                  </Link>
-                ))}
-              </div>
+                    {stat.value}
+                  </span>
+                  <span className="text-sm font-medium text-foreground/72 group-hover:text-primary">
+                    {stat.label}
+                  </span>
+                </Link>
+              ))}
             </div>
           </div>
         </Container>
       </section>
 
       <Container className="space-y-20 pt-20">
-        <section className="">
-          <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
-            <div className="space-y-0">
-              <span
-                className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
-                style={{ color: "var(--brand-accent)" }}
-              >
-                Editorial
-              </span>
-
-              <Heading level={2} className="text-foreground font-display">
-                Reports
-              </Heading>
-              <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
-                Read data-driven narratives built from the datasets published in
-                the portal.
-              </p>
-            </div>
-
-            <Button asChild className="sm:ml-auto" variant="outline">
-              <Link href="/reports">{t("Common.exploreAll")}</Link>
-            </Button>
-          </div>
-
-          {reports.length === 0 ? (
-            <p className="text-muted-foreground">No reports published yet.</p>
-          ) : (
-            <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-              {reports.map((report) => (
-                <ReportCard key={report.slug} report={report} />
-              ))}
-            </div>
-          )}
-        </section>
-
-         <section className="">
+        
+        <section>
           <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
             <div className="space-y-0">
               <span
@@ -204,7 +212,7 @@ export default async function Home() {
                 Highlights
               </span>
 
-              <Heading level={2} className="text-foreground font-display">
+              <Heading level={2} className="font-display text-foreground">
                 Featured Datasets
               </Heading>
               <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
@@ -217,7 +225,7 @@ export default async function Home() {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-2">
             {datasets?.map((dataset) => (
               <DatasetCard
                 key={dataset.id}
@@ -229,7 +237,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section className="">
+        <section>
           <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
             <div className="space-y-0">
               <span
@@ -239,7 +247,7 @@ export default async function Home() {
                 Browse
               </span>
 
-              <Heading level={2} className="text-foreground font-display">
+              <Heading level={2} className="font-display text-foreground">
                 Topics
               </Heading>
               <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
@@ -315,9 +323,41 @@ export default async function Home() {
             })}
           </div>
         </section>
-       
 
-        
+        <section>
+          <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
+            <div className="space-y-0">
+              <span
+                className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
+                style={{ color: "var(--brand-accent)" }}
+              >
+                Editorial
+              </span>
+
+              <Heading level={2} className="font-display text-foreground">
+                Reports
+              </Heading>
+              <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
+                Read data-driven narratives built from the datasets published in
+                the portal.
+              </p>
+            </div>
+
+            <Button asChild className="sm:ml-auto" variant="outline">
+              <Link href="/reports">{t("Common.exploreAll")}</Link>
+            </Button>
+          </div>
+
+          {reports.length === 0 ? (
+            <p className="text-muted-foreground">No reports published yet.</p>
+          ) : (
+            <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+              {reports.map((report) => (
+                <ReportCard key={report.slug} report={report} />
+              ))}
+            </div>
+          )}
+        </section>
 
         <section className="mb-12 grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
           <div className="relative overflow-hidden rounded-3xl border border-[color:color-mix(in_srgb,var(--brand-accent)_45%,white)] px-6 py-6 sm:px-8 sm:py-8">

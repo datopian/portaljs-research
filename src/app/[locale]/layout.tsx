@@ -1,9 +1,10 @@
-import { Fraunces, Manrope, Rubik } from "next/font/google";
+import { Inter } from "next/font/google";
 import "../globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import QuerylessAssistant from "@/components/queryless/QuerylessAssistant";
 import { Suspense } from "react";
+import type { CSSProperties } from "react";
 import QueryProvider from "@/providers/QueryProvider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations } from "next-intl/server";
@@ -14,22 +15,10 @@ import { Metadata } from "next";
 import { buildLocalizedMetadata } from "@/lib/seo";
 import { isQuerylessEnabled } from "@/lib/queryless";
 
-const manrope = Manrope({
-  weight: ["400", "500", "600", "700", "800"],
+const inter = Inter({
+  weight: ["400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
   variable: "--font-ui-family",
-});
-
-const rubik = Rubik({
-  weight: ["600", "700"],
-  subsets: ["latin"],
-  variable: "--font-logo-family",
-});
-
-const fraunces = Fraunces({
-  weight: ["600"],
-  subsets: ["latin"],
-  variable: "--font-display-family",
 });
 
 type Params = { locale: string };
@@ -61,7 +50,13 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body
-        className={`${manrope.className} ${manrope.variable} ${rubik.variable} ${fraunces.variable} antialiased min-h-screen flex flex-col`}
+        className={`${inter.className} ${inter.variable} antialiased min-h-screen flex flex-col`}
+        style={
+          {
+            "--font-logo-family": "var(--font-ui-family)",
+            "--font-display-family": "var(--font-ui-family)",
+          } as CSSProperties
+        }
       >
         <Suspense>
           <NextIntlClientProvider locale={locale} messages={messages}>

@@ -2,6 +2,7 @@ import Container from "../ui/container";
 import { Link } from "@/i18n/navigation";
 import { ArrowUpRight, Mail } from "lucide-react";
 import { useTranslations } from "next-intl";
+import PortalLogo from "./PortalLogo";
 
 export default function Footer() {
   const t = useTranslations();
@@ -12,12 +13,7 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)]">
           <div className="space-y-3">
             <Link href="/" className="inline-flex items-center gap-2">
-              <span
-                className="font-logo text-[1.7rem] font-semibold tracking-tight"
-                style={{ color: "var(--brand-logo)" }}
-              >
-                PortalJS
-              </span>
+              <PortalLogo size="sm" />
             </Link>
             <p className="max-w-xl text-sm leading-6 text-muted-foreground">
               {t("Site.description")}

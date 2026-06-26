@@ -48,8 +48,8 @@
 
 :root {
   --font-ui: var(--font-ui-family), ui-sans-serif, system-ui, sans-serif;
-  --font-logo: var(--font-logo-family, "Rubik"), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-display-family, "Fraunces"), ui-serif, Georgia, serif;
+  --font-logo: var(--font-logo-family, "Inter"), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display-family, "Inter"), ui-sans-serif, system-ui, sans-serif;
   --font-code: "SFMono-Regular", ui-monospace, monospace;
   --theme: var(--brand-surface-tint);
   --hero-bg: transparent;
@@ -131,11 +131,11 @@
   }
 
   .font-logo {
-    font-family: var(--font-logo-family, "Rubik"), ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-logo-family, "Inter"), ui-sans-serif, system-ui, sans-serif;
   }
 
   .font-display {
-    font-family: var(--font-display-family, "Fraunces"), ui-serif, Georgia, serif;
+    font-family: var(--font-display-family, "Inter"), ui-sans-serif, system-ui, sans-serif;
   }
 }
 

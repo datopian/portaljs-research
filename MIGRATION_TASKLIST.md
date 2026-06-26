@@ -85,12 +85,12 @@ This tasklist tracks implementation of all `_temp` features into `v2`. Check ite
 
 ## Phase 8: Homepage
 
-- [ ] Keep `v2` visual design.
-- [ ] Add `_temp` homepage AI prompts if still present in the old UI components.
-- [ ] Add Reports section.
-- [ ] Preserve `_temp` fixed remote CSV visualizations and URLs.
-- [ ] Validate homepage charts against remote CSV data.
-- [ ] Keep `v2` branding while using `Research Portal` as the site name.
+- [x] Keep `v2` visual design.
+- [x] Add `_temp` homepage AI prompts if still present in the old UI components.
+- [x] Add Reports section.
+- [x] Preserve `_temp` fixed remote CSV visualizations and URLs.
+- [x] Validate homepage charts against remote CSV data.
+- [x] Keep `v2` branding while using `Research Portal` as the site name.
 
 ## Phase 9: Queryless AI
 

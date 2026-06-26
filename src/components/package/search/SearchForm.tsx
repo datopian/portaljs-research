@@ -99,7 +99,7 @@ export default function SearchForm({
             placeholder={placeholder}
             onChange={(e) => setQuery(e.target.value)}
             value={q}
-            className="h-14 w-full border-0 bg-transparent py-3 pl-12 pr-4 text-base text-foreground outline-0 placeholder:text-muted-foreground"
+            className="h-12 w-full border-0 bg-transparent py-3 pl-12 pr-4 text-base text-foreground outline-0 placeholder:text-muted-foreground"
           />
           {q && (
             <button
@@ -116,7 +116,7 @@ export default function SearchForm({
         <Button
           type="submit"
           size="lg"
-          className="h-14 shrink-0 font-light tracking-[2px] shadow-lg cursor-pointer rounded-xl px-7 sm:min-w-30"
+          className="h-12 shrink-0 font-light tracking-[2px] shadow-lg cursor-pointer rounded-xl px-7 sm:min-w-30"
         >
           {querylessEnabled ? (
             <>

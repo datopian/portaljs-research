@@ -151,7 +151,7 @@ export default function Hero({
   );
 }
 
-function HeroAbstractVisual({
+export function HeroAbstractVisual({
   intensity = "default",
   align = "right",
   className,
