@@ -138,8 +138,7 @@ export default async function DatasetPage({ params }: DatasetPageProps) {
         />
       ) : (
         <DatasetResources
-          organization={dataset.organization?.name ?? ""}
-          dataset={dataset.name}
+          dataset={dataset}
           resources={dataset?.resources || []}
         />
       )}

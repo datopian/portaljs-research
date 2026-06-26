@@ -4,10 +4,10 @@ export const supportedPreviewFormats = [
   "csv",
   "json",
   "pdf",
+  "geojson",
   //"xlsx",
   //"xls",
   //"kml",
-  //"geojson",
   //"shp",
 ];
 

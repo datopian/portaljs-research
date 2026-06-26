@@ -51,15 +51,15 @@ This tasklist tracks implementation of all `_temp` features into `v2`. Check ite
 ## Phase 5: Resource Detail and Previews
 
 - [x] Render inline resource previews on the dataset page, matching `_temp` behavior.
-- [ ] Preserve CSV preview using `v2` CSV explorer.
-- [ ] Preserve PDF preview.
-- [ ] Preserve JSON preview.
-- [ ] Preserve iframe preview.
-- [ ] Add GeoJSON preview support.
-- [ ] Install needed GeoJSON/map dependencies.
-- [ ] Do not implement Excel/XLS/XLSX preview yet.
-- [ ] Document Excel preview as intentionally deferred.
-- [ ] Validate each supported preview type manually.
+- [x] Preserve CSV preview using `v2` CSV explorer.
+- [x] Preserve PDF preview.
+- [x] Preserve JSON preview.
+- [x] Preserve iframe preview.
+- [x] Add GeoJSON preview support.
+- [x] Install needed GeoJSON/map dependencies.
+- [x] Do not implement Excel/XLS/XLSX preview yet.
+- [x] Document Excel preview as intentionally deferred.
+- [x] Validate each supported preview type manually.
 
 ## Phase 6: Organizations, Groups, Topics
 

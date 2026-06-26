@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import SearchResultsSection from "@/components/package/search/SearchResultsSection";
 import Page from "@/components/layout/Page";
 import { getOrganization } from "@/lib/ckan/organization";
-import ActivityStream from "@/components/activity/ActivityStream";
 import { getTranslations } from "next-intl/server";
 import { Metadata } from "next";
 import { buildLocalizedMetadata } from "@/lib/seo";
@@ -28,7 +27,7 @@ export default async function OrgPage({ params }: OrgPageProps) {
   const t = await getTranslations({ locale });
   let orgName = decodeURIComponent(org);
 
-  if(!orgName.includes("@")) {
+  if (!orgName.includes("@")) {
     return notFound();
   }
 
@@ -59,35 +58,17 @@ export default async function OrgPage({ params }: OrgPageProps) {
       title={organization.title}
       description={organization.description}
       descriptionClampLines={3}
-      tabs={[
-        {
-          title: t("Common.datasets"),
-          id: "datasets",
-          content: (
-            <SearchStateProvider defaultOrg={organization.id}>
-              <SearchResultsSection embedded showSearchForm />
-            </SearchStateProvider>
-          ),
-        },
-        {
-          title: t("Common.activityStream"),
-          id: "activity",
-          content: (
-            <div>
-              <ActivityStream type="organization" id={organization.name} />
-            </div>
-          ),
-        },
-      ]}
-    />
+    >
+      <SearchStateProvider defaultOrg={organization.id}>
+        <SearchResultsSection embedded showSearchForm />
+      </SearchStateProvider>
+    </Page>
   );
 }
-
 
 export async function generateMetadata({
   params,
 }: OrgPageProps): Promise<Metadata> {
-
   const { locale, org } = await params;
   let orgName = decodeURIComponent(org);
 
@@ -98,12 +79,12 @@ export async function generateMetadata({
     include_datasets: false,
   });
 
-  const title = orgData?.title ?? orgName
+  const title = orgData?.title ?? orgName;
   const description = orgData?.description ?? "";
 
   return buildLocalizedMetadata({
     locale,
-    pathname: `/${orgName}`, 
+    pathname: `/${orgName}`,
     title,
     description,
   });

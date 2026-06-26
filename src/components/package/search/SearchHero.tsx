@@ -14,7 +14,7 @@ export default function SearchHero() {
     const tagItems = result?.search_facets?.tags?.items ?? [];
     const source = groupItems.length > 0 ? groupItems : tagItems;
 
-    return source.slice(0, 5).map((item) => ({
+    return source.slice(0, 4).map((item) => ({
       label: item.display_name || item.name,
       value: item.name,
       type: groupItems.length > 0 ? "groups" : "tags",

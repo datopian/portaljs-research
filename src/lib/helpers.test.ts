@@ -127,7 +127,7 @@ test("formatDatasetApiSnippet uses dataset.id and trims api base URL", () => {
 
   assert.equal(
     curlSnippet,
-    'curl -L "https://ckan.example/api/3/action/package_show?id=dataset-stable-id"',
+    'curl.exe -L "https://ckan.example/api/3/action/package_show?id=dataset-stable-id"',
   );
 
   const jsSnippet = formatDatasetApiSnippet(dataset, {
@@ -148,7 +148,7 @@ test("formatResourceAccessSnippet outputs file downloads when resource URL is pr
 
   assert.equal(
     snippet,
-    'curl -L "https://files.example/data/global-co2-emissions.csv" -o "global-co2-emissions.csv"',
+    'curl.exe -L "https://files.example/data/global-co2-emissions.csv" -o "global-co2-emissions.csv"',
   );
 });
 
@@ -161,5 +161,18 @@ test("formatResourceAccessSnippet falls back to stable URL when no resource URL 
   assert.equal(
     snippet,
     'import pandas as pd\n\ndf = pd.read_csv("https://research.example/@south-asia-water-foundation/dataset-stable-id")\ndf.head()',
+  );
+});
+
+test("formatResourceAccessSnippet decodes encoded output filenames", () => {
+  const snippet = formatResourceAccessSnippet(dataset, {
+    style: "curl",
+    resourceUrl:
+      "https://blob.datopian.com/resources/3314bb43-465f-40f7-9f2a-d28b0677b606/dataverse%20test%20New%20v6-6KKgwe.json",
+  });
+
+  assert.equal(
+    snippet,
+    'curl.exe -L "https://blob.datopian.com/resources/3314bb43-465f-40f7-9f2a-d28b0677b606/dataverse%20test%20New%20v6-6KKgwe.json" -o "dataverse test New v6-6KKgwe.json"',
   );
 });

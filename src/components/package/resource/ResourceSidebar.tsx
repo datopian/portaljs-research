@@ -34,7 +34,7 @@ export default async function ResourceSidebar({
   const dms = envVars.dms ?? "";
 
   return (
-    <div className="space-y-4 lg:sticky lg:top-24 lg:-mt-30">
+    <div className="space-y-4 lg:sticky lg:top-24">
       <section className="surface-panel rounded-2xl p-5 sm:p-6">
 
 

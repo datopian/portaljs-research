@@ -110,6 +110,7 @@ export default async function ResourcePage({ params }: PageProps) {
       }}
       title={resource.name ?? ""}
       description={resource.description}
+      heroVisual={{ hide: true }}
       sidebar={<ResourceSidebar resource={resource} dataset={dataset} />}
       tabs={[
         ...(resource.format && supportsPreview(resource)

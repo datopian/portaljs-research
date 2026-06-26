@@ -1,11 +1,16 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import CSVExplorerWrapper from "@/components/csv-explorer";
 import CodeViewer from "@/components/ui/code-viewer";
 import IframeWrapper from "@/components/ui/iframe";
 import PDFViewer from "@/components/ui/pdf-viewer";
 import { Resource } from "@/schemas/ckan";
 import { FileWarning } from "lucide-react";
+
+const GeoJsonMap = dynamic(() => import("./GeoJsonMap"), {
+  ssr: false,
+});
 
 function PreviewShell({
   children,
@@ -43,6 +48,13 @@ export default function ResourcePreview({ resource }: { resource: Resource }) {
       return (
         <PreviewShell padded>
           <CodeViewer data={resource.url} label="JSON" />
+        </PreviewShell>
+      );
+
+    case "geojson":
+      return (
+        <PreviewShell>
+          <GeoJsonMap dataUrl={resource.url || ""} title={resource.name} />
         </PreviewShell>
       );
 

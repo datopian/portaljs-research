@@ -9,6 +9,7 @@ export default function Facets() {
   const { result, options, defaultOrg, defaultGroup, setOptions } = useSearchState();
   const searchResultFacets = result?.search_facets || {};
   const t = useTranslations();
+  const showTypeFilter = searchResultFacets?.type?.items?.length > 0;
 
   return (
     <div className="surface-panel rounded-2xl bg-white">
@@ -17,7 +18,8 @@ export default function Facets() {
       </div>
 
       <div className="px-5 py-2 sm:px-6 divide-y">
-        <div className="border-[color:var(--border)] py-4">
+        {showTypeFilter && (
+          <div className="border-[color:var(--border)] py-4">
           <div className="flex items-center gap-2 py-2 text-sm font-semibold text-foreground">
             <div className="text-primary">
               <BarChart3 className="size-4" />
@@ -26,6 +28,8 @@ export default function Facets() {
           </div>
           <SearchTypeSwitcher className="pt-3" />
         </div>
+        )}
+        
 
         {searchResultFacets?.organization?.items?.length > 0 && !defaultOrg && (
           <FacetCard

@@ -5,9 +5,10 @@ import { Dataset } from "@/schemas/ckan";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDateToDDMMYYYY } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
-import { Building2, CalendarDays, Files } from "lucide-react";
+import { Building2, CalendarDays } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
+import { generateMockDoi } from "@/lib/doi";
 
 export default function SearchResultItem({
   dataset,
@@ -17,6 +18,7 @@ export default function SearchResultItem({
   query?: string;
 }) {
   const t = useTranslations("Common");
+  const datasetDoi = generateMockDoi(dataset.name);
   const uniqueFormats = [
     ...new Set(
       dataset.resources?.filter((r) => r.format).map((r) => r.format?.toUpperCase())
@@ -44,7 +46,7 @@ export default function SearchResultItem({
 
   return (
     <article className="surface-panel rounded-2xl bg-white p-5 sm:p-6">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-start lg:justify-between">
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
         <div className="min-w-0 flex-1">
           <h2 className="text-lg font-semibold tracking-tight text-foreground sm:text-xl">
             <Link
@@ -68,15 +70,14 @@ export default function SearchResultItem({
               {formatDateToDDMMYYYY(dataset.metadata_modified ?? "")}
             </div>
 
-            {dataset.resources.length > 0 && (
-              <div className="inline-flex items-center gap-2">
-                <Files className="size-4" />
-                <span>
-                  {dataset.resources.length} file
-                  {dataset.resources.length > 1 ? "s" : ""}
-                </span>
-              </div>
-            )}
+            <div className="inline-flex items-center gap-2">
+              <span className="font-semibold uppercase tracking-[0.12em] text-slate-400">
+                DOI
+              </span>
+              <code className="rounded bg-slate-100 px-2 py-1 text-[11px] text-slate-700">
+                {datasetDoi}
+              </code>
+            </div>
           </div>
 
           {dataset.notes && (
@@ -106,7 +107,7 @@ export default function SearchResultItem({
 
         <div className="flex items-center gap-3 lg:flex-col lg:items-end">
 
-          <Button asChild variant="outline" className="min-w-36">
+          <Button asChild variant="outline" className="min-w-30">
             <Link href={`/@${dataset.organization?.name}/${dataset.name}`}>
               {dataset.type === "visualization"
                 ? t("viewVisualization")

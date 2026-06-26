@@ -16,7 +16,15 @@ function getOutputFileName(dataset: Dataset, resourceUrl: string) {
     .filter(Boolean)
     .pop();
 
-  return fileNameFromUrl || `${dataset?.name || "dataset"}.data`;
+  if (fileNameFromUrl) {
+    try {
+      return decodeURIComponent(fileNameFromUrl);
+    } catch {
+      return fileNameFromUrl;
+    }
+  }
+
+  return `${dataset?.name || "dataset"}.data`;
 }
 
 export function formatDatasetApiSnippet(
@@ -54,7 +62,7 @@ if (!response.ok) throw new Error(\`HTTP \${response.status}\`);
 const dataset = (await response.json()).result;`;
   }
 
-  return `curl -L "${packageShowUrl}"`;
+  return `curl.exe -L "${packageShowUrl}"`;
 }
 
 export function formatResourceAccessSnippet(
@@ -93,8 +101,8 @@ const text = await response.text();`;
   }
 
   if (!resourceUrl) {
-    return `curl -L "${accessUrl}"`;
+    return `curl.exe -L "${accessUrl}"`;
   }
 
-  return `curl -L "${accessUrl}" -o "${outputFileName}"`;
+  return `curl.exe -L "${accessUrl}" -o "${outputFileName}"`;
 }
