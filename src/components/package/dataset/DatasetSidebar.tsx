@@ -37,6 +37,7 @@ export default async function DatasetSidebar({
   const datasetSources = Array.isArray(dataset.source)
     ? dataset.source.filter(Boolean)
     : [];
+  const datasetTags = dataset.tags ?? [];
 
   return (
     <div className="space-y-3  ">
@@ -112,9 +113,9 @@ export default async function DatasetSidebar({
           <SidebarItem
             label={t("Common.tags")}
             value={
-              dataset.tags?.length ? (
+              datasetTags.length ? (
                 <span className="text-[13px] leading-5">
-                  {dataset.tags.map((tag, index) => (
+                  {datasetTags.map((tag, index) => (
                     <span key={tag.id}>
                       <Link
                         href={`/search?tags=${tag.name}`}
@@ -122,7 +123,7 @@ export default async function DatasetSidebar({
                       >
                         {tag.display_name ?? tag.name}
                       </Link>
-                      {index < dataset.tags.length - 1 ? ", " : ""}
+                      {index < datasetTags.length - 1 ? ", " : ""}
                     </span>
                   ))}
                 </span>
