@@ -1,25 +1,29 @@
 "use client";
 
 import Container from "../ui/container";
+import { Button } from "../ui/button";
 import { Link, usePathname } from "@/i18n/navigation";
 import clsx from "clsx";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { envVars } from "@/lib/env";
 import LanguageSwitcher from "./LanguageSwitcher";
 import PortalLogo from "./PortalLogo";
 
 export default function Header() {
-  const loginUrl = "https://cloud.portaljs.com/auth/signin";
+  const loginUrl = `${(envVars.dms ?? "").replace(/\/$/, "")}/user/login`;
   const [menuOpen, setMenuOpen] = useState(false);
   const pathname = usePathname();
   const t = useTranslations();
 
   const menu = [
     { href: "/search", label: t("Common.datasets") },
-    { href: "/reports", label: t("Common.reports") },
-    { href: "/organizations", label: t("Common.organizations") },
+    //{ href: "/organizations", label: t("Common.organizations") },
     { href: "/topics", label: t("Common.topics") },
+    { href: "/reports", label: t("Common.reports") },
+    
+    
   ];
 
   useEffect(() => {
@@ -55,7 +59,11 @@ export default function Header() {
           </nav>
 
           <div className="hidden items-center gap-3 lg:flex">
-
+            {envVars.dms ? (
+              <Button asChild size="sm" variant="outline">
+                <a href={loginUrl}>Login</a>
+              </Button>
+            ) : null}
             <LanguageSwitcher />
           </div>
 
@@ -90,19 +98,24 @@ export default function Header() {
                   className={clsx(
                     "rounded-xl px-4 py-3 text-sm font-medium transition-colors",
                     isActive(item.href)
-                      ? "bg-accent [color:var(--brand-accent)]"
-                      : "text-muted-foreground hover:bg-accent hover:[color:var(--brand-accent)]"
+                      ? "bg-accent text-white"
+                      : "text-muted-foreground hover:bg-accent/5 hover:[color:var(--brand-accent)]"
                   )}
                 >
                   {item.label}
                 </Link>
               ))}
-              <a
-                href={loginUrl}
-                className="rounded-xl px-4 py-3 text-sm font-medium [color:var(--brand-accent)] transition-colors hover:bg-accent hover:opacity-80"
-              >
-                Login
-              </a>
+              {envVars.dms ? (
+                <a
+                  href={loginUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  
+                  className="rounded-xl px-4 py-3 text-sm font-medium [color:var(--brand-accent)] transition-colors hover:bg-accent/5 "
+                >
+                  Login
+                </a>
+              ) : null}
             </div>
           </nav>
         </div>

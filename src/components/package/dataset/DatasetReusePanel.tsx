@@ -114,7 +114,7 @@ export default function DatasetReusePanel({ dataset }: { dataset: Dataset }) {
                 href={primaryDownloadUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex w-full items-center gap-2.5 px-3.5 py-2.5 text-left text-sm font-medium text-foreground transition hover:bg-accent"
+                className="flex w-full items-center gap-2.5 px-3.5 py-2.5 text-left text-sm font-medium text-foreground transition hover:bg-accent/5 hover:text-accent"
               >
                 <Download className="size-3.5 text-muted-foreground" />
                 Download dataset
@@ -126,7 +126,7 @@ export default function DatasetReusePanel({ dataset }: { dataset: Dataset }) {
                 setActiveModal("api-access");
                 setIsOpen(false);
               }}
-              className="flex w-full items-center gap-2.5 px-3.5 py-2.5 text-left text-sm font-medium text-foreground transition hover:bg-accent"
+              className="flex w-full items-center gap-2.5 px-3.5 py-2.5 text-left text-sm font-medium text-foreground transition hover:bg-accent/5 hover:text-accent"
             >
               <Code2 className="size-3.5 text-muted-foreground" />
               API access
@@ -137,7 +137,7 @@ export default function DatasetReusePanel({ dataset }: { dataset: Dataset }) {
                 setActiveModal("citation");
                 setIsOpen(false);
               }}
-              className="flex w-full items-center gap-2.5 px-3.5 py-2.5 text-left text-sm font-medium text-foreground transition hover:bg-accent"
+              className="flex w-full items-center gap-2.5 px-3.5 py-2.5 text-left text-sm font-medium text-foreground transition hover:bg-accent/5 hover:text-accent"
             >
               <GraduationCap className="size-3.5 text-muted-foreground" />
               Cite this dataset
@@ -148,7 +148,7 @@ export default function DatasetReusePanel({ dataset }: { dataset: Dataset }) {
                 void copyValue("doi", datasetDoi);
                 setIsOpen(false);
               }}
-              className="flex w-full items-center gap-2.5 px-3.5 py-2.5 text-left text-sm font-medium text-foreground transition hover:bg-accent"
+              className="flex w-full items-center gap-2.5 px-3.5 py-2.5 text-left text-sm font-medium text-foreground transition hover:bg-accent/5 hover:text-accent"
             >
               <Fingerprint className="size-3.5 text-muted-foreground" />
               {copiedField === "doi" ? "DOI copied" : "Copy DOI"}
@@ -159,7 +159,7 @@ export default function DatasetReusePanel({ dataset }: { dataset: Dataset }) {
                 setActiveModal("stable-url");
                 setIsOpen(false);
               }}
-              className="flex w-full items-center gap-2.5 px-3.5 py-2.5 text-left text-sm font-medium text-foreground transition hover:bg-accent"
+              className="flex w-full items-center gap-2.5 px-3.5 py-2.5 text-left text-sm font-medium text-foreground transition hover:bg-accent/5 hover:text-accent"
             >
               <Link2 className="size-3.5 text-muted-foreground" />
               Show stable URL
@@ -184,7 +184,12 @@ export default function DatasetReusePanel({ dataset }: { dataset: Dataset }) {
                   Use this persistent dataset URL for sharing, citation, and long-term reference.
                 </p>
               </div>
-              <Button variant="ghost" size="icon" onClick={() => setActiveModal(null)}>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setActiveModal(null)}
+                className="panel-icon-button"
+              >
                 <X className="size-4" />
               </Button>
             </div>
@@ -221,7 +226,12 @@ export default function DatasetReusePanel({ dataset }: { dataset: Dataset }) {
                   Choose a citation format and copy a ready-to-use reference generated from this dataset&apos;s metadata.
                 </p>
               </div>
-              <Button variant="ghost" size="icon" onClick={() => setActiveModal(null)}>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setActiveModal(null)}
+                className="panel-icon-button"
+              >
                 <X className="size-4" />
               </Button>
             </div>
@@ -269,7 +279,12 @@ export default function DatasetReusePanel({ dataset }: { dataset: Dataset }) {
                   Use one of these starter snippets to access this dataset programmatically.
                 </p>
               </div>
-              <Button variant="ghost" size="icon" onClick={() => setActiveModal(null)}>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setActiveModal(null)}
+                className="panel-icon-button"
+              >
                 <X className="size-4" />
               </Button>
             </div>

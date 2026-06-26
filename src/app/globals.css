@@ -192,4 +192,10 @@
   .leaflet-control-attribution {
     font-size: 11px;
   }
+
+  .panel-icon-button:hover,
+  .panel-icon-button:focus-visible {
+    background: #f1f5f9;
+    color: var(--foreground);
+  }
 }

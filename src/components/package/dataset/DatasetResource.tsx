@@ -89,7 +89,12 @@ function ResourceApiAccessDialog({
                 Use one of these starter snippets to access this resource directly.
               </p>
             </div>
-            <Button variant="ghost" size="icon" onClick={onClose}>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onClose}
+              className="panel-icon-button"
+            >
               <X className="size-4" />
             </Button>
           </div>

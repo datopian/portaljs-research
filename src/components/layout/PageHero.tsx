@@ -122,7 +122,7 @@ export default function Hero({
               )}
 
               {title && (
-                <h1 className="font-display max-w-3xl text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
+                <h1 className="font-display max-w-4xl text-4xl font-[900] tracking-tight text-foreground sm:text-5xl">
                   {title}
                 </h1>
               )}

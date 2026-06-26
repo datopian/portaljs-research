@@ -1,4 +1,5 @@
 import Container from "@/components/ui/container";
+import { HeroAbstractVisual } from "@/components/layout/PageHero";
 import PageSearchInput from "@/components/ui/page-search-input";
 import { getAllOrganizations } from "@/lib/ckan/organization";
 import { toPublicOrgSlug } from "@/lib/portal-name";
@@ -38,9 +39,15 @@ export default async function OrganizationsPage({ searchParams }: Props) {
 
   return (
     <div>
-      <section className="hero-surface  border-[color:var(--border)]">
-        <Container className="py-12 sm:py-14">
-          <div className="grid gap-5 lg:gap-12 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-end">
+      <section className="hero-surface relative overflow-hidden border-[color:var(--border)]">
+        <HeroAbstractVisual
+          intensity="soft"
+          align="right"
+          wrapperClassName="right-0 w-[24rem] lg:block xl:w-[30rem]"
+        />
+
+        <Container className="relative z-10 py-12 sm:py-14">
+          <div className="grid gap-5 lg:gap-12 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-center">
             <div className="space-y-3.5">
               <span
                 className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
@@ -49,7 +56,7 @@ export default async function OrganizationsPage({ searchParams }: Props) {
                 Browse
               </span>
               <div className="max-w-2xl space-y-3.5">
-                <h1 className="font-display text-[2.7rem] font-semibold leading-[1.02] tracking-tight text-foreground sm:text-[3.35rem]">
+                <h1 className="font-display text-[2.7rem] font-[900] leading-[1.02] tracking-tight text-foreground sm:text-[3.35rem]">
                   Organizations
                 </h1>
                 <p className="max-w-xl text-[1rem] leading-7 text-muted-foreground sm:text-[1.05rem]">

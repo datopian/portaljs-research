@@ -13,7 +13,7 @@ export default function PortalLogo({
   const sizes = {
     sm: {
       wrapper: "gap-3",
-      symbolWrap: "h-16 w-16 rounded-[1.35rem]",
+      symbolWrap: "h-14 w-14 rounded-[1.35rem]",
       symbolPad: "p-0",
       title: "text-[1.1rem]",
       subtitle: "text-[10px] tracking-[0.16em]",

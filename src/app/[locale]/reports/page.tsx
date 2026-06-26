@@ -25,7 +25,7 @@ export default async function ReportsPage() {
             >
               Editorial
             </span>
-            <h1 className="font-display text-[2.7rem] font-semibold leading-[1.02] tracking-tight text-foreground sm:text-[3.35rem]">
+            <h1 className="font-display text-[2.7rem] font-[900] leading-[1.02] tracking-tight text-foreground sm:text-[3.35rem]">
               Reports
             </h1>
             <p className="max-w-2xl text-[1rem] leading-7 text-muted-foreground sm:text-[1.05rem]">

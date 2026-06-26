@@ -87,7 +87,7 @@ export default async function Home() {
         b.display_name || b.title || b.name,
       ),
     )
-    .slice(0, 4);
+    .slice(0, 6);
   const reports = getAllReports().slice(0, 2);
   const stats = [
     {
@@ -185,7 +185,7 @@ export default async function Home() {
                   className="group flex flex-col items-center justify-center gap-1 text-center transition hover:text-primary"
                 >
                   <span
-                    className="text-3xl font-semibold tracking-tight sm:text-4xl"
+                    className="text-3xl font-[700] tracking-tight sm:text-4xl"
                     style={{ color: "var(--brand-accent)" }}
                   >
                     {stat.value}
@@ -201,7 +201,40 @@ export default async function Home() {
       </section>
 
       <Container className="space-y-20 pt-20">
-        
+        <section>
+          <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
+            <div className="space-y-0">
+              <span
+                className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
+                style={{ color: "var(--brand-accent)" }}
+              >
+                Editorial
+              </span>
+
+              <Heading level={2} className="font-display text-foreground">
+                Reports
+              </Heading>
+              <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
+                Read data-driven narratives built from the datasets published in
+                the portal.
+              </p>
+            </div>
+
+            <Button asChild className="sm:ml-auto" variant="outline">
+              <Link href="/reports">{t("Common.exploreAll")}</Link>
+            </Button>
+          </div>
+
+          {reports.length === 0 ? (
+            <p className="text-muted-foreground">No reports published yet.</p>
+          ) : (
+            <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+              {reports.map((report) => (
+                <ReportCard key={report.slug} report={report} />
+              ))}
+            </div>
+          )}
+        </section>
         <section>
           <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
             <div className="space-y-0">
@@ -261,61 +294,37 @@ export default async function Home() {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
             {groups.map((group) => {
-              const imageUrl = group.image_display_url || group.image_url;
               const groupTitle =
                 group.display_name || group.title || group.name;
+              const datasetCount = group.package_count ?? 0;
 
               return (
                 <Link
                   key={group.id}
                   href={`/topics/${toPublicGroupSlug(group.name)}`}
-                  className="group surface-panel flex h-full items-stretch overflow-hidden rounded-2xl bg-white transition duration-200 hover:-translate-y-0.5 hover:[border-color:var(--brand-border-tint)] hover:shadow-[0_18px_36px_-28px_rgba(37,99,235,0.3)]"
+                  className="group surface-panel flex h-full min-h-[255px] flex-col rounded-[1.6rem] bg-white px-6 py-7 transition duration-200 hover:-translate-y-0.5 hover:[border-color:var(--brand-border-tint)] hover:shadow-[0_18px_36px_-28px_rgba(37,99,235,0.3)]"
                 >
-                  <div className="relative aspect-square w-22 shrink-0 border-r border-[color:var(--border)] bg-[color:color-mix(in_srgb,var(--brand-accent)_4%,white)] p-2.5 sm:w-32 sm:p-4">
-                    {imageUrl ? (
-                      <div className="flex h-full w-full items-center justify-center">
-                        <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[color:var(--brand-accent)] shadow-[var(--shadow-soft)] sm:h-16 sm:w-16 sm:rounded-2xl">
-                          {/* CKAN group images can be external; keep a plain image until remote patterns are configured. */}
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={imageUrl}
-                            alt={groupTitle}
-                            width={256}
-                            height={256}
-                            className="h-full w-full object-contain p-2 sm:p-3"
-                          />
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center">
-                        <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[color:var(--brand-accent)] shadow-[var(--shadow-soft)] sm:h-16 sm:w-16 sm:rounded-2xl">
-                          <FolderKanban className="size-6 sm:size-8" />
-                        </div>
-                      </div>
-                    )}
+                  <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[color:color-mix(in_srgb,var(--brand-accent)_4%,white)] text-foreground shadow-[0_18px_36px_-30px_rgba(15,23,42,0.2)]">
+                    <FolderKanban className="size-8 stroke-[1.8] text-accent" />
                   </div>
 
-                  <div className="flex flex-1 flex-col gap-2 p-5">
-                    <h3 className="line-clamp-2 text-[1.1rem] font-semibold leading-7 tracking-tight text-foreground">
+                  <div className="mt-6 flex flex-1 flex-col">
+                    <h3 className="line-clamp-2 text-[1.05rem] font-semibold leading-6 tracking-tight text-foreground">
                       {groupTitle}
                     </h3>
-                    {group.description ? (
-                      <p className="line-clamp-3 text-[0.95rem] leading-7 text-muted-foreground">
-                        {group.description.replace(/<\/?[^>]+(>|$)/g, "")}
-                      </p>
-                    ) : (
-                      <p className="text-[0.95rem] leading-7 text-muted-foreground">
-                        {t("Dataset.datasetsCount", {
-                          count: group.package_count ?? 0,
-                        })}
-                      </p>
-                    )}
-                    <div className="mt-auto pt-2 text-[0.92rem] font-medium text-primary/85">
+                    <p className="mt-1 text-sm leading-7 text-muted-foreground">
                       {t("Dataset.datasetsCount", {
-                        count: group.package_count ?? 0,
+                        count: datasetCount,
                       })}
+                    </p>
+
+                    <div className="mt-auto pt-7">
+                      <span className="inline-flex text-sm items-center gap-2 font-medium text-primary transition group-hover:gap-2.5">
+                        View collection
+                        <ArrowRight className="size-6" />
+                      </span>
                     </div>
                   </div>
                 </Link>
@@ -324,40 +333,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section>
-          <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
-            <div className="space-y-0">
-              <span
-                className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
-                style={{ color: "var(--brand-accent)" }}
-              >
-                Editorial
-              </span>
-
-              <Heading level={2} className="font-display text-foreground">
-                Reports
-              </Heading>
-              <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
-                Read data-driven narratives built from the datasets published in
-                the portal.
-              </p>
-            </div>
-
-            <Button asChild className="sm:ml-auto" variant="outline">
-              <Link href="/reports">{t("Common.exploreAll")}</Link>
-            </Button>
-          </div>
-
-          {reports.length === 0 ? (
-            <p className="text-muted-foreground">No reports published yet.</p>
-          ) : (
-            <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-              {reports.map((report) => (
-                <ReportCard key={report.slug} report={report} />
-              ))}
-            </div>
-          )}
-        </section>
+        
 
         <section className="mb-12 grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
           <div className="relative overflow-hidden rounded-3xl border border-[color:color-mix(in_srgb,var(--brand-accent)_45%,white)] px-6 py-6 sm:px-8 sm:py-8">

@@ -56,7 +56,7 @@ export default function PageSearchInput({
             onChange={(e) => setValue(e.target.value)}
             placeholder={placeholder}
             disabled={isPending}
-            className="h-14 w-full border-0 bg-transparent py-3 pl-12 pr-4 text-base text-foreground outline-0 placeholder:text-muted-foreground"
+            className="h-12 w-full border-0 bg-transparent py-3 pl-12 pr-4 text-base text-foreground outline-0 placeholder:text-muted-foreground"
           />
           {value && (
             <button
@@ -70,7 +70,7 @@ export default function PageSearchInput({
           )}
         </div>
 
-        <Button type="submit" size="lg" className="h-14 cursor-pointer shadow-lg shrink-0 rounded-xl px-6 sm:min-w-32">
+        <Button type="submit" size="lg" className="h-12 cursor-pointer shadow-lg shrink-0 rounded-xl px-6 sm:min-w-32">
           {submitLabel}
         </Button>
       </div>

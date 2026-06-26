@@ -16,10 +16,10 @@ export default function DatasetCard({
   cardClassName?: string;
 }) {
   const datasetDoi = generateMockDoi(dataset.name);
-  const tagNames = dataset.tags
+  /*const tagNames = dataset.tags
     ?.map((tag) => tag.display_name || tag.name)
     .filter(Boolean)
-    .slice(0, 3);
+    .slice(0, 3);*/
 
   return (
     <Link
@@ -35,7 +35,7 @@ export default function DatasetCard({
       >
         <CardHeader className="pb-2">
           <div className="space-y-2">
-            <h3 className="line-clamp-2 group-hover:text-primary transition text-[1.15rem] font-semibold leading-6 tracking-tight">
+            <h3 className="line-clamp-3 group-hover:text-primary transition text-[1.15rem] font-semibold leading-6 tracking-tight">
               {dataset.title}
             </h3>
             <div className="text-xs text-slate-500">
@@ -51,7 +51,7 @@ export default function DatasetCard({
 
         <CardContent className="mt-auto space-y-4">
           {dataset.notes ? (
-            <p className="line-clamp-3 text-sm leading-6 text-muted-foreground">
+            <p className="line-clamp-2 text-sm leading-6 text-muted-foreground">
               {dataset.notes.replace(/<\/?[^>]+(>|$)/g, "")}
             </p>
           ) : null}
@@ -69,7 +69,7 @@ export default function DatasetCard({
             </span>
           </div>
 
-          {tagNames && tagNames.length > 0 ? (
+          {/*tagNames && tagNames.length > 0 ? (
             <div className="flex flex-wrap gap-2">
               {tagNames.map((tag) => (
                 <Badge key={tag} variant="outline" className="max-w-full">
@@ -82,7 +82,7 @@ export default function DatasetCard({
                 </span>
               ) : null}
             </div>
-          ) : null}
+          ) : null*/}
         </CardContent>
       </Card>
     </Link>

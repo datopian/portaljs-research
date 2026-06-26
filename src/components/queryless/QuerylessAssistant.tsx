@@ -1000,7 +1000,13 @@ export default function QuerylessAssistant() {
               </div>
 
               <div className="flex shrink-0 items-center gap-1">
-                <Button variant="ghost" size="icon" onClick={clearChat} aria-label="Clear chat">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={clearChat}
+                  aria-label="Clear chat"
+                  className="panel-icon-button"
+                >
                   <Trash2 className="size-4" />
                 </Button>
                 <Button
@@ -1008,6 +1014,7 @@ export default function QuerylessAssistant() {
                   size="icon"
                   onClick={() => setIsOpen(false)}
                   aria-label="Close Queryless assistant"
+                  className="panel-icon-button"
                 >
                   <X className="size-4" />
                 </Button>

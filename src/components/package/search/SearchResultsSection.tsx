@@ -158,7 +158,7 @@ export default function SearchResultsSection({
               <button
                 type="button"
                 onClick={() => setMobileFiltersOpen(false)}
-                className="inline-flex size-10 items-center justify-center rounded-xl border border-input bg-white text-muted-foreground"
+                className="panel-icon-button inline-flex size-10 items-center justify-center rounded-xl border border-input bg-white text-muted-foreground transition-colors"
               >
                 <span className="sr-only">{t("Common.close")}</span>
                 <X aria-hidden="true" className="size-5" />
