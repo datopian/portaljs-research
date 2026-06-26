@@ -201,7 +201,7 @@ export default async function Home() {
                 className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
                 style={{ color: "var(--brand-accent)" }}
               >
-                Recent
+                Highlights
               </span>
 
               <Heading level={2} className="text-foreground font-display">

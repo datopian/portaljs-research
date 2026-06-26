@@ -4,11 +4,13 @@ import SearchResultsSection from "@/components/package/search/SearchResultsSecti
 import Page from "@/components/layout/Page";
 import { formatDateToDDMMYYYY } from "@/lib/utils";
 import { getGroup } from "@/lib/ckan/group";
-import ActivityStream from "@/components/activity/ActivityStream";
 import { getTranslations } from "next-intl/server";
 import { Metadata } from "next";
 import { buildLocalizedMetadata } from "@/lib/seo";
-import { getCkanGroupNameCandidates, toPublicGroupSlug } from "@/lib/portal-name";
+import {
+  getCkanGroupNameCandidates,
+  toPublicGroupSlug,
+} from "@/lib/portal-name";
 
 type TopicPageParams = {
   locale: string;
@@ -55,7 +57,9 @@ async function getTopicForMetadata(topicSlug: string) {
 
 export const revalidate = 60;
 
-export async function generateStaticParams(): Promise<Array<{ topic: string }>> {
+export async function generateStaticParams(): Promise<
+  Array<{ topic: string }>
+> {
   return [];
 }
 
@@ -95,27 +99,11 @@ export default async function TopicPage({ params }: TopicPageProps) {
           value: topicData.package_count ?? 0,
         },
       ]}
-      tabs={[
-        {
-          title: t("Common.datasets"),
-          id: "datasets",
-          content: (
-            <SearchStateProvider defaultGroup={topicData.name}>
-              <SearchResultsSection embedded showSearchForm />
-            </SearchStateProvider>
-          ),
-        },
-        {
-          title: t("Common.activityStream"),
-          id: "activity",
-          content: (
-            <div>
-              <ActivityStream type="group" id={topicData.name} />
-            </div>
-          ),
-        },
-      ]}
-    />
+    >
+      <SearchStateProvider defaultGroup={topicData.name}>
+        <SearchResultsSection embedded showSearchForm />
+      </SearchStateProvider>
+    </Page>
   );
 }
 

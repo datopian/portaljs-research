@@ -63,13 +63,13 @@ This tasklist tracks implementation of all `_temp` features into `v2`. Check ite
 
 ## Phase 6: Organizations, Groups, Topics
 
-- [ ] Keep `v2` organization listing/search behavior.
-- [ ] Keep `v2` organization detail behavior.
-- [ ] Keep `v2` group listing/search behavior.
-- [ ] Keep `v2` group detail behavior.
-- [ ] Add activity stream visibility env var with default `false`.
-- [ ] Hide activity streams by default.
-- [ ] Show activity streams only when the env var enables them.
+- [x] Keep `v2` organization listing/search behavior.
+- [x] Keep `v2` organization detail behavior.
+- [x] Keep `v2` group listing/search behavior.
+- [x] Keep `v2` group detail behavior.
+- [x] Activity streams removed from public pages; no visibility env var needed.
+- [x] Hide activity streams by default.
+- [x] No public pages should show activity streams unless this feature is intentionally reintroduced.
 - [x] Implement topics pages using group-backed data while keeping Topics labels.
 
 ## Phase 7: Reports
