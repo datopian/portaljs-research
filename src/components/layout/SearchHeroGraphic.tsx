@@ -36,29 +36,6 @@ export default function SearchHeroGraphic({
           strokeOpacity="0.06"
           strokeWidth="1.5"
         />
-
-        <path
-          d="M84 126C132 100 176 95 228 100C272 104 313 118 368 118"
-          stroke="currentColor"
-          strokeOpacity="0.14"
-          strokeWidth="16"
-          strokeLinecap="round"
-        />
-        <path
-          d="M118 162C166 139 208 135 256 139C296 143 334 155 384 154"
-          stroke="currentColor"
-          strokeOpacity="0.09"
-          strokeWidth="12"
-          strokeLinecap="round"
-        />
-        <path
-          d="M154 89C196 72 230 69 272 72C308 76 338 88 378 88"
-          stroke="currentColor"
-          strokeOpacity="0.07"
-          strokeWidth="10"
-          strokeLinecap="round"
-        />
-
         <g opacity="0.26">
           {Array.from({ length: 12 }).map((_, index) => {
             const x = 382 + (index % 3) * 14;

@@ -121,14 +121,13 @@ export default async function Home() {
   return (
     <div>
       <section className="hero-surface relative overflow-hidden">
+        <HeroAbstractVisual
+          intensity="strong"
+          align="right"
+          wrapperClassName="top-18 hidden h-[24rem] w-[30rem] lg:block xl:top-16 xl:h-[28rem] xl:w-[36rem] 2xl:h-[30rem] 2xl:w-[40rem]"
+          className="top-0"
+        />
         <Container className="relative z-10 flex min-h-[calc(100vh-200px)] flex-col px-4 pt-8 pb-8">
-          <HeroAbstractVisual
-            intensity="strong"
-            align="right"
-            wrapperClassName="top-18 hidden h-[24rem] w-[30rem] lg:block xl:top-16 xl:h-[28rem] xl:w-[36rem] 2xl:h-[30rem] 2xl:w-[40rem]"
-            className="top-0"
-          />
-
           <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center text-center">
             <div className="relative h-18 w-18 sm:h-20 sm:w-20">
               <PortalLogoSymbol />
@@ -272,7 +271,8 @@ export default async function Home() {
                 groupDatasetCounts.get(group.name) ?? group.package_count ?? 0;
               const imageUrl = group.image_display_url || group.image_url;
               const topicShadeStops = [16, 14, 12, 10, 8, 6];
-              const topicShade = topicShadeStops[index % topicShadeStops.length];
+              const topicShade =
+                topicShadeStops[index % topicShadeStops.length];
               return (
                 <Link
                   key={group.id}
@@ -488,3 +488,4 @@ export default async function Home() {
     </div>
   );
 }
+
