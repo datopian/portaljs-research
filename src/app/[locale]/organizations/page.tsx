@@ -1,5 +1,5 @@
 import Container from "@/components/ui/container";
-import { HeroAbstractVisual } from "@/components/layout/PageHero";
+import SearchHeroGraphic from "@/components/layout/SearchHeroGraphic";
 import PageSearchInput from "@/components/ui/page-search-input";
 import { getAllOrganizations } from "@/lib/ckan/organization";
 import { toPublicOrgSlug } from "@/lib/portal-name";
@@ -40,32 +40,27 @@ export default async function OrganizationsPage({ searchParams }: Props) {
   return (
     <div>
       <section className="hero-surface relative overflow-hidden border-[color:var(--border)]">
-        <HeroAbstractVisual
-          intensity="soft"
-          align="right"
-          wrapperClassName="right-0 w-[24rem] lg:block xl:w-[30rem]"
-        />
-
-        <Container className="relative z-10 py-12 sm:py-14">
-          <div className="grid gap-5 lg:gap-12 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:items-center">
-            <div className="space-y-3.5">
+        <Container className="relative z-10 py-14 sm:pt-16 sm:pb-10">
+          <SearchHeroGraphic className="w-[20rem] xl:w-[25rem]" />
+          <div className="grid relative gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.35fr)] lg:items-center">
+            <div className="max-w-xl">
               <span
-                className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
+                className="mb-4 block text-sm font-semibold uppercase tracking-[0.16em]"
                 style={{ color: "var(--brand-accent)" }}
               >
                 Browse
               </span>
-              <div className="max-w-2xl space-y-3.5">
-                <h1 className="font-display text-[2.7rem] font-[900] leading-[1.02] tracking-tight text-foreground sm:text-[3.35rem]">
-                  Organizations
-                </h1>
-                <p className="max-w-xl text-[1rem] leading-7 text-muted-foreground sm:text-[1.05rem]">
-                  {t("OrganizationsPage.description")}
-                </p>
-              </div>
+
+              <h1 className="text-4xl font-display font-[900] tracking-tight text-foreground sm:text-5xl">
+                Organizations
+              </h1>
+
+              <p className="mt-4 max-w-lg text-base leading-7 text-muted-foreground sm:text-lg">
+                {t("OrganizationsPage.description")}
+              </p>
             </div>
 
-            <div className="space-y-3">
+            <div>
               <PageSearchInput
                 defaultValue={query}
                 placeholder={t("OrganizationsPage.searchPlaceholder")}

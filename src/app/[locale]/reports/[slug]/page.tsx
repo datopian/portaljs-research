@@ -1,4 +1,4 @@
-import Container from "@/components/ui/container";
+import Page from "@/components/layout/Page";
 import { notFound } from "next/navigation";
 import { compileMDX } from "next-mdx-remote/rsc";
 import { Metadata } from "next";
@@ -27,7 +27,6 @@ async function getRelatedDatasets(
       try {
         const dataset = await ckan().getDatasetDetails(datasetSlug);
         const orgName = dataset.organization?.name;
-        console.log("dataset", dataset);
         if (!orgName) {
           return {
             slug: datasetSlug,
@@ -42,7 +41,6 @@ async function getRelatedDatasets(
           href: `/@${orgName}/${dataset.name}`,
         };
       } catch {
-        console.log("Failed to fetch dataset details for slug:", datasetSlug);
         return {
           slug: datasetSlug,
           title: datasetSlug,
@@ -81,8 +79,22 @@ function getReportComponents(slug: string) {
   return reportComponents[slug] ?? {};
 }
 
+function formatReportDate(dateStr: string): string {
+  const [year, month, day] = dateStr.split("-").map(Number);
+
+  return new Date(year, (month || 1) - 1, day || 1).toLocaleDateString(
+    "en-US",
+    {
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    },
+  );
+}
+
 export default async function ReportPage({ params }: ReportPageProps) {
   const { slug } = await params;
+  const t = await getTranslations();
 
   try {
     const { content, frontmatter } = getReportSource(slug);
@@ -98,15 +110,38 @@ export default async function ReportPage({ params }: ReportPageProps) {
     });
 
     return (
-      <Container className="py-10 sm:py-12">
-        <div className="mx-auto max-w-4xl">
+      <Page
+        breadcrumb={{
+          items: [
+            {
+              title: t("Common.reports"),
+              href: "/reports",
+            },
+          ],
+        }}
+        title={frontmatter.title}
+        description={frontmatter.description}
+        heroClass="pb-8 sm:pb-10"
+        heroInnerClassName="mx-auto max-w-3xl"
+        heroContentClassName="max-w-3xl"
+        heroVisual={{ hide: true }}
+        metadata={[
+          {
+            value: (
+              <span className="text-sm font-medium text-muted-foreground">
+                {formatReportDate(frontmatter.date)}
+              </span>
+            ),
+          },
+        ]}
+      >
+        <div className="mx-auto max-w-3xl pb-14 sm:pb-18">
           <ReportContent
-            frontmatter={frontmatter}
             body={body}
             relatedDatasets={relatedDatasets}
           />
         </div>
-      </Container>
+      </Page>
     );
   } catch {
     notFound();

@@ -26,6 +26,8 @@ export type PageProps = {
   children?: React.ReactNode;
   heroContent?: React.ReactNode;
   heroClass?: string;
+  heroInnerClassName?: string;
+  heroContentClassName?: string;
   heroVisual?: HeroVisualProps;
   sidebar?: React.ReactNode;
   sidebarClassName?: string;
@@ -43,6 +45,8 @@ export default function Page({
   children,
   heroClass,
   heroContent,
+  heroInnerClassName,
+  heroContentClassName,
   heroVisual,
   sidebar,
   sidebarClassName,
@@ -64,6 +68,8 @@ export default function Page({
           description={description}
           descriptionClampLines={descriptionClampLines}
           className={cn("relative", tabs.length > 0 ? "pb-6!" : "", heroClass)}
+          innerClassName={heroInnerClassName}
+          contentClassName={heroContentClassName}
           visual={heroVisual ?? { intensity: "soft", align: "right" }}
         >
           <div className="space-y-4">

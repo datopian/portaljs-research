@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { cn } from "@/lib/utils";
+import PortalLogoSymbol from "./PortalLogoSymbol";
 
 export default function PortalLogo({
   className,
@@ -40,17 +40,11 @@ export default function PortalLogo({
     <div className={cn("inline-flex items-center", current.wrapper, className)}>
       <div
         className={cn(
-          "relative shrink-0 bg-[color:color-mix(in_srgb,var(--brand-accent)_6%,white)] shadow-[var(--shadow-soft)]",
+          "relative shrink-0 shadow-[var(--shadow-soft)]",
           current.symbolWrap,
         )}
       >
-        <Image
-          src="/images/logos/MainLogoSymbol.svg"
-          alt="Research Portal"
-          fill
-          className={cn("object-contain", current.symbolPad)}
-          priority
-        />
+        <PortalLogoSymbol className={cn(current.symbolPad)} />
       </div>
 
       <div className="min-w-0">

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import DatasetCard from "@/components/package/dataset/DatasetCard";
 import HomePromptChips from "@/components/home/HomePromptChips";
 import ReportCard from "@/components/reports/ReportCard";
@@ -7,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { Heading } from "@/components/ui/heading";
 import { HeroAbstractVisual } from "@/components/layout/PageHero";
+import PortalLogoSymbol from "@/components/layout/PortalLogoSymbol";
 import { searchDatasets } from "@/lib/ckan/dataset";
 import { getAllGroups } from "@/lib/ckan/group";
 import { getAllReports } from "@/lib/reports";
@@ -16,6 +16,7 @@ import { toPublicGroupSlug } from "@/lib/portal-name";
 import { ArrowRight, Code2, FolderKanban, Mail } from "lucide-react";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import type { CSSProperties } from "react";
 import { Link } from "@/i18n/navigation";
 
 type Props = { params: Promise<{ locale: string }> };
@@ -40,9 +41,9 @@ export default async function Home() {
   const requestDataHref =
     "mailto:data@example.com?subject=Open%20Data%20Request";
   const suggestedPrompts = [
-    "How has global temperature changed since 2000?",
+    "How has global temperature changed since 1980?",
     "Compare atmospheric CO2 trends since 2000",
-    "Show population projections to 2100",
+    "Which countries spend most on pharmaceuticals?",
   ];
 
   const [featuredDatasetsResult, statsResult, visualizationsResult, allGroups] =
@@ -120,23 +121,17 @@ export default async function Home() {
   return (
     <div>
       <section className="hero-surface relative overflow-hidden">
-        <HeroAbstractVisual
-          intensity="strong"
-          align="right"
-          wrapperClassName="right-0 top-18 hidden h-[24rem] w-[30rem] lg:block xl:top-16 xl:h-[28rem] xl:w-[36rem] 2xl:h-[30rem] 2xl:w-[40rem]"
-          className="right-[-1.5rem] top-0"
-        />
-
         <Container className="relative z-10 flex min-h-[calc(100vh-200px)] flex-col px-4 pt-8 pb-8">
+          <HeroAbstractVisual
+            intensity="strong"
+            align="right"
+            wrapperClassName="top-18 hidden h-[24rem] w-[30rem] lg:block xl:top-16 xl:h-[28rem] xl:w-[36rem] 2xl:h-[30rem] 2xl:w-[40rem]"
+            className="top-0"
+          />
+
           <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center text-center">
             <div className="relative h-18 w-18 sm:h-20 sm:w-20">
-              <Image
-                src="/images/logos/MainLogoSymbol.svg"
-                alt="Research Portal"
-                fill
-                className="object-contain"
-                priority
-              />
+              <PortalLogoSymbol />
             </div>
 
             <div className="mt-6 space-y-4">
@@ -270,17 +265,25 @@ export default async function Home() {
               groupColumnCount === 6 && "xl:grid-cols-6",
             )}
           >
-            {groups.map((group) => {
+            {groups.map((group, index) => {
               const groupTitle =
                 group.display_name || group.title || group.name;
               const datasetCount =
                 groupDatasetCounts.get(group.name) ?? group.package_count ?? 0;
               const imageUrl = group.image_display_url || group.image_url;
+              const topicShadeStops = [16, 14, 12, 10, 8, 6];
+              const topicShade = topicShadeStops[index % topicShadeStops.length];
               return (
                 <Link
                   key={group.id}
                   href={`/topics/${toPublicGroupSlug(group.name)}`}
-                  className="group surface-panel flex h-full min-h-[200px] flex-col rounded-[1.6rem] bg-white px-5 py-6 transition duration-200 hover:-translate-y-0.5 hover:[border-color:var(--brand-border-tint)] hover:shadow-[0_18px_36px_-28px_rgba(37,99,235,0.3)]"
+                  className="topic-home-card group surface-panel flex h-full min-h-[200px] flex-col rounded-[1.6rem] bg-white px-5 py-6 transition duration-200 hover:-translate-y-0.5 hover:[border-color:var(--brand-border-tint)] hover:shadow-[0_18px_36px_-28px_rgba(37,99,235,0.3)]"
+                  style={
+                    {
+                      "--topic-card-accent": `color-mix(in srgb, var(--brand-accent) ${topicShade}%, white)`,
+                      "--topic-card-accent-strong": `color-mix(in srgb, var(--brand-accent) ${Math.max(topicShade + 8, 12)}%, white)`,
+                    } as CSSProperties
+                  }
                 >
                   <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[color:color-mix(in_srgb,var(--brand-accent)_4%,white)] text-foreground shadow-[0_18px_36px_-30px_rgba(15,23,42,0.2)]">
                     {imageUrl ? (
