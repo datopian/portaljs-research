@@ -36,20 +36,21 @@ This tasklist tracks implementation of all `_temp` features into `v2`. Check ite
 
 ## Phase 4: Dataset Detail and Reuse
 
-- [ ] Migrate stable dataset URL helpers with `_temp` id-over-name behavior.
-- [ ] Migrate deterministic DOI generation exactly as `_temp`.
-- [ ] Display DOI exactly as `_temp` and link to `https://doi.org/{generatedDoi}`.
-- [ ] Migrate citation helpers with APA and BibTeX exactly as `_temp`.
-- [ ] Change citation publisher to `Research Portal`.
-- [ ] Merge API snippets so curl, Python, R, and JavaScript are available.
-- [ ] Rebuild `_temp` "Use this dataset" dropdown in `v2`.
-- [ ] Include download, API access, cite dataset, copy DOI, and stable URL actions.
-- [ ] Show all `_temp` dataset metadata fields.
-- [ ] Preserve metadata export links for RDF, TTL, and JSON-LD.
-- [ ] Add or adapt unit tests for DOI, citation, stable URL, and API snippet helpers.
+- [x] Migrate stable dataset URL helpers with `_temp` id-over-name behavior.
+- [x] Migrate deterministic DOI generation exactly as `_temp`.
+- [x] Display DOI exactly as `_temp` and link to `https://doi.org/{generatedDoi}`.
+- [x] Migrate citation helpers with APA and BibTeX exactly as `_temp`.
+- [x] Change citation publisher to `Research Portal`.
+- [x] Merge API snippets so curl, Python, R, and JavaScript are available.
+- [x] Rebuild `_temp` "Use this dataset" dropdown in `v2`.
+- [x] Include download, API access, cite dataset, copy DOI, and stable URL actions.
+- [x] Show all `_temp` dataset metadata fields.
+- [x] Preserve metadata export links for RDF, TTL, and JSON-LD.
+- [x] Add or adapt unit tests for DOI, citation, stable URL, and API snippet helpers.
 
 ## Phase 5: Resource Detail and Previews
 
+- [x] Render inline resource previews on the dataset page, matching `_temp` behavior.
 - [ ] Preserve CSV preview using `v2` CSV explorer.
 - [ ] Preserve PDF preview.
 - [ ] Preserve JSON preview.

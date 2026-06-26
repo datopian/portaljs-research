@@ -10,6 +10,7 @@ export interface Dataset {
   isopen?: boolean;
   license_id?: string;
   license_title?: string;
+  license_url?: string;
   maintainer?: string;
   maintainer_email?: string;
   metadata_created?: string;
@@ -25,6 +26,7 @@ export interface Dataset {
   type?: "dataset" | "visualization" | string;
   url?: string;
   external_url?: string;
+  source?: string[];
   version?: string;
   activity_stream?: Array<Activity>;
   resources: Array<Resource>;

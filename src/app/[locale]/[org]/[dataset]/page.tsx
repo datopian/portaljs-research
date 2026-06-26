@@ -5,8 +5,6 @@ import DatasetResources from "@/components/package/dataset/DatasetResource";
 import DatasetSidebar from "@/components/package/dataset/DatasetSidebar";
 import VisualizationPreview from "@/components/package/dataset/VisualizationPreview";
 import { notFound } from "next/navigation";
-import ApiTabs from "@/components/package/api/ApiTab";
-import ActivityStream from "@/components/activity/ActivityStream";
 import { getTranslations } from "next-intl/server";
 import { Metadata } from "next";
 import { buildLocalizedMetadata } from "@/lib/seo";
@@ -81,6 +79,7 @@ export default async function DatasetPage({ params }: DatasetPageProps) {
       }}
       title={dataset?.title ?? ""}
       description={dataset.notes}
+      descriptionClampLines={4}
       metadata={[
         {
           value: dataset.groups?.length ? (
@@ -130,53 +129,21 @@ export default async function DatasetPage({ params }: DatasetPageProps) {
         },
       ].filter((item) => item.value)}
       sidebar={<DatasetSidebar dataset={dataset} />}
-      tabs={[
-        ...(dataset.type === "visualization"
-          ? [
-              {
-                id: "visualization",
-                title: t("Common.visualization"),
-                //subtitle: t("Common.visualization"),
-                content: (
-                  <VisualizationPreview
-                    title={dataset.title}
-                    externalUrl={dataset.external_url}
-                  />
-                ),
-              },
-            ]
-          : [
-              {
-                id: "resources",
-                title: t("Common.resources"),
-                subtitle: t("Dataset.resourcesTitle", {
-                  count: dataset.resources.length,
-                }),
-                content: (
-                  <DatasetResources
-                    organization={dataset.organization?.name ?? ""}
-                    dataset={dataset.name}
-                    resources={dataset?.resources || []}
-                  />
-                ),
-              },
-            ]),
-        ...(dataset.type === "dataset"
-          ? [
-              {
-                id: "api",
-                title: t("Common.api"),
-                content: <ApiTabs name={dataset.name} action="package_show" />,
-              },
-            ]
-          : []),
-        {
-          id: "activities",
-          title: t("Common.activityStream"),
-          content: <ActivityStream type="package" id={dataset.name} />,
-        },
-      ]}
-    />
+      
+    >
+      {dataset.type === "visualization" ? (
+        <VisualizationPreview
+          title={dataset.title}
+          externalUrl={dataset.external_url}
+        />
+      ) : (
+        <DatasetResources
+          organization={dataset.organization?.name ?? ""}
+          dataset={dataset.name}
+          resources={dataset?.resources || []}
+        />
+      )}
+    </Page>
   );
 }
 
