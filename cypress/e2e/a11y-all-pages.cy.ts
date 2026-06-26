@@ -1,6 +1,32 @@
 import { logA11yViolations } from "../support/axe-logger";
 
 const routes = (Cypress.env("routes") as string[]) ?? [];
+const baseUrl = Cypress.config("baseUrl") || "http://localhost:3000";
+
+function getHeaderValue(
+  headers: Record<string, string | string[] | undefined>,
+  name: string
+) {
+  const value = headers[name];
+  return Array.isArray(value) ? value[0] : value;
+}
+
+function resolveVisitUrl(requestedUrl: string, response: Cypress.Response<unknown>) {
+  if (typeof response.redirectedToUrl === "string" && response.redirectedToUrl) {
+    return response.redirectedToUrl;
+  }
+
+  const location = getHeaderValue(
+    response.headers as Record<string, string | string[] | undefined>,
+    "location"
+  );
+
+  if (!location) {
+    return requestedUrl;
+  }
+
+  return new URL(location, baseUrl).toString();
+}
 
 describe("Accessibility (WCAG 2.2 AA) – per page", () => {
   before(() => {
@@ -24,12 +50,23 @@ describe("Accessibility (WCAG 2.2 AA) – per page", () => {
         failOnStatusCode: false,
         followRedirect: true,
       }).then((resp) => {
+        const contentType = getHeaderValue(
+          resp.headers as Record<string, string | string[] | undefined>,
+          "content-type"
+        );
+        const visitUrl = resolveVisitUrl(url, resp);
+
         if (resp.status < 200 || resp.status >= 300) {
           cy.log(`Skipping ${url} (status ${resp.status})`);
           return;
         }
 
-        cy.visit(url, { failOnStatusCode: false });
+        expect(
+          contentType,
+          `expected HTML response when requesting ${url}`
+        ).to.include("text/html");
+
+        cy.visit(visitUrl, { failOnStatusCode: false });
         cy.get("main", { timeout: 10000 }).should("exist");
         cy.contains("Not Found", { matchCase: false }).should("not.exist");
 

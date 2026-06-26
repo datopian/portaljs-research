@@ -58,7 +58,7 @@ export default function PortalLogo({
         </p>
         <p
           className={cn(
-            "font-logo truncate font-semibold uppercase leading-none text-primary/90",
+            "font-logo truncate font-semibold uppercase leading-none text-primary",
             current.subtitle,
           )}
         >

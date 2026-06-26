@@ -321,18 +321,9 @@ function persistDailyUsage(dateKey: string, count: number) {
   window.localStorage.setItem(QUERYLESS_DAILY_LIMIT_STORAGE_KEY, JSON.stringify({ dateKey, count }));
 }
 
-const assistantWelcome =
-  "Hi, I’m Queryless. Ask in plain English, and I’ll use the current page context to help you explore the portal.";
-
 const assistantIntro =
   "Hi, I'm Queryless \u{1F44B}\n\nAsk questions in plain English. No SQL needed.\n\nTry things like:\n- \"What climate datasets are available?\"\n- \"Find datasets about public health.\"\n- \"Which organisations have the most datasets?\"\n- \"Show datasets published in the last year.\"\n\nI'm aware of the page you are browsing \u{1F440}";
-void assistantWelcome;
-const starterPrompts = [
-  "What climate datasets are available?",
-  "Find datasets about public health.",
-  "Which organisations have the most datasets?",
-  "Show datasets published in the last year.",
-];
+
 
 function MarkdownContent({ content }: { content: string }) {
   const { mainContent, methodContent } = useMemo(

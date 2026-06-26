@@ -38,7 +38,7 @@ export default function DatasetCard({
               {dataset.title}
             </h3>
             <div className="text-xs text-slate-500">
-              <span className="mr-1 font-semibold uppercase tracking-[0.12em] text-slate-400">
+              <span className="mr-1 font-semibold uppercase tracking-[0.12em] text-slate-700">
                 DOI
               </span>
               <code className="rounded bg-slate-100 px-2 py-1 text-[11px] text-slate-700">

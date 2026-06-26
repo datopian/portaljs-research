@@ -71,7 +71,7 @@ export default function SearchResultItem({
             </div>
 
             <div className="inline-flex items-center gap-2">
-              <span className="font-semibold uppercase tracking-[0.12em] text-slate-400">
+              <span className="font-semibold uppercase tracking-[0.12em] text-slate-700">
                 DOI
               </span>
               <code className="rounded bg-slate-100 px-2 py-1 text-[11px] text-slate-700">

@@ -136,7 +136,7 @@ export default async function TopicsPage({ searchParams }: Props) {
                       </p>
                     )}
 
-                    <div className="mt-auto pt-2 text-[0.92rem] font-medium text-primary/85">
+                    <div className="mt-auto pt-2 text-[0.92rem] font-medium text-primary">
                       {t("Dataset.datasetsCount", {
                         count: group.package_count ?? 0,
                       })}

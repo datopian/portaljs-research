@@ -129,7 +129,7 @@ export default async function OrganizationsPage({ searchParams }: Props) {
                     </p>
                   )}
 
-                  <div className="mt-auto pt-2 text-[0.92rem] font-medium text-primary/85">
+                  <div className="mt-auto pt-2 text-[0.92rem] font-medium text-primary">
                     {t("Dataset.datasetsCount", { count: org.package_count ?? 0 })}
                   </div>
                 </div>
