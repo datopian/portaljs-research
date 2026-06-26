@@ -1,5 +1,4 @@
 import { Dataset } from "@/schemas/ckan";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { generateMockDoi } from "@/lib/doi";
 import { cn, formatDateToHumanReadable } from "@/lib/utils";

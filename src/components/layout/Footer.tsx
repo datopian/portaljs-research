@@ -67,6 +67,19 @@ export default function Footer() {
             </div>
           </div>
         </div>
+
+        <div className="mt-8 border-t border-[color:var(--border)] pt-5">
+          <a
+            href="https://portaljs.org"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-medium text-foreground/82 transition hover:text-primary"
+          >
+            <span className="text-base leading-none">Built with</span>
+            <span className="font-semibold text-primary">PortalJS</span>
+            <ArrowUpRight className="size-3.5" />
+          </a>
+        </div>
       </Container>
     </footer>
   );

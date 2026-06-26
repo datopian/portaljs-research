@@ -12,12 +12,7 @@ import { getAllGroups } from "@/lib/ckan/group";
 import { getAllReports } from "@/lib/reports";
 import { isQuerylessEnabled } from "@/lib/queryless";
 import { toPublicGroupSlug } from "@/lib/portal-name";
-import {
-  ArrowRight,
-  Code2,
-  FolderKanban,
-  Mail,
-} from "lucide-react";
+import { ArrowRight, Code2, FolderKanban, Mail } from "lucide-react";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -49,35 +44,31 @@ export default async function Home() {
     "Track daily oil prices over time",
   ];
 
-  const [
-    featuredDatasetsResult,
-    statsResult,
-    visualizationsResult,
-    allGroups,
-  ] = await Promise.all([
-    searchDatasets({
-      options: {
-        limit: 4,
-        sort: "metadata_modified desc",
-        type: "dataset",
-      },
-    }),
-    searchDatasets({
-      options: {
-        limit: 0,
-        type: "dataset",
-      },
-      facetFields: ["groups", "organization"],
-    }),
-    searchDatasets({
-      options: {
-        limit: 0,
-        type: "visualization",
-      },
-      facetFields: [],
-    }),
-    getAllGroups(),
-  ]);
+  const [featuredDatasetsResult, statsResult, visualizationsResult, allGroups] =
+    await Promise.all([
+      searchDatasets({
+        options: {
+          limit: 4,
+          sort: "metadata_modified desc",
+          type: "dataset",
+        },
+      }),
+      searchDatasets({
+        options: {
+          limit: 0,
+          type: "dataset",
+        },
+        facetFields: ["groups", "organization"],
+      }),
+      searchDatasets({
+        options: {
+          limit: 0,
+          type: "visualization",
+        },
+        facetFields: [],
+      }),
+      getAllGroups(),
+    ]);
 
   const datasets = featuredDatasetsResult.datasets;
   const visualizationCount = visualizationsResult.count ?? 0;
@@ -120,10 +111,10 @@ export default async function Home() {
     <div>
       <section className="hero-surface relative overflow-hidden">
         <HeroAbstractVisual
-          intensity="soft"
+          intensity="strong"
           align="right"
-          wrapperClassName="inset-y-auto bottom-0 right-0 h-[18rem] w-[24rem] lg:block xl:h-[20rem] xl:w-[30rem]"
-          className="top-auto bottom-0"
+          wrapperClassName="right-0 top-18 hidden h-[24rem] w-[30rem] lg:block xl:top-16 xl:h-[28rem] xl:w-[36rem] 2xl:h-[30rem] 2xl:w-[40rem]"
+          className="right-[-1.5rem] top-0"
         />
 
         <Container className="relative z-10 flex min-h-[calc(100vh-96px)] flex-col px-4 pt-8 pb-8">
@@ -201,40 +192,6 @@ export default async function Home() {
       </section>
 
       <Container className="space-y-20 pt-20">
-        <section>
-          <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
-            <div className="space-y-0">
-              <span
-                className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
-                style={{ color: "var(--brand-accent)" }}
-              >
-                Editorial
-              </span>
-
-              <Heading level={2} className="font-display text-foreground">
-                Reports
-              </Heading>
-              <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
-                Read data-driven narratives built from the datasets published in
-                the portal.
-              </p>
-            </div>
-
-            <Button asChild className="sm:ml-auto" variant="outline">
-              <Link href="/reports">{t("Common.exploreAll")}</Link>
-            </Button>
-          </div>
-
-          {reports.length === 0 ? (
-            <p className="text-muted-foreground">No reports published yet.</p>
-          ) : (
-            <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-              {reports.map((report) => (
-                <ReportCard key={report.slug} report={report} />
-              ))}
-            </div>
-          )}
-        </section>
         <section>
           <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
             <div className="space-y-0">
@@ -332,96 +289,160 @@ export default async function Home() {
             })}
           </div>
         </section>
+        <section>
+          <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
+            <div className="space-y-0">
+              <span
+                className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
+                style={{ color: "var(--brand-accent)" }}
+              >
+                Editorial
+              </span>
 
-        
-
-        <section className="mb-12 grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
-          <div className="relative overflow-hidden rounded-3xl border border-[color:color-mix(in_srgb,var(--brand-accent)_45%,white)] px-6 py-6 sm:px-8 sm:py-8">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(135deg, color-mix(in srgb, var(--brand-accent) 88%, black) 0%, var(--brand-accent) 52%, color-mix(in srgb, var(--brand-accent) 78%, white) 100%)",
-              }}
-            />
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 opacity-60"
-              style={{
-                background:
-                  "radial-gradient(circle at top right, color-mix(in srgb, white 24%, transparent) 0%, transparent 34%)",
-              }}
-            />
-            <div className="relative flex h-full flex-col gap-5">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/16 text-white shadow-[var(--shadow-soft)] ring-1 ring-white/20 backdrop-blur-sm">
-                <Mail className="size-5" />
-              </div>
-              <div className="space-y-2">
-                <span className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-white/75">
-                  Request data
-                </span>
-                <h2 className="text-[1.8rem] font-semibold tracking-tight text-white">
-                  Need a dataset that is not here yet?
-                </h2>
-                <p className="max-w-xl text-[0.98rem] leading-7 text-white/78">
-                  Send a request and let the data team know what information
-                  would be most useful to publish next.
-                </p>
-              </div>
-              <div className="mt-auto">
-                <Button
-                  asChild
-                  className="!bg-white !text-[color:var(--brand-accent)] hover:!bg-white/92"
-                >
-                  <a href={requestDataHref}>
-                    Request data
-                    <ArrowRight className="size-4" />
-                  </a>
-                </Button>
-              </div>
+              <Heading level={2} className="font-display text-foreground">
+                Reports
+              </Heading>
+              <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
+                Read data-driven narratives built from the datasets published in
+                the portal.
+              </p>
             </div>
+
+            <Button asChild className="sm:ml-auto" variant="outline">
+              <Link href="/reports">{t("Common.exploreAll")}</Link>
+            </Button>
           </div>
 
-          <div className="surface-panel relative overflow-hidden rounded-3xl px-6 py-6 sm:px-8 sm:py-8">
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0"
-              style={{
-                background:
-                  "linear-gradient(135deg, color-mix(in srgb, var(--brand-accent) 4%, white) 0%, white 52%)",
-              }}
-            />
-            <div className="relative flex h-full flex-col gap-5">
-              <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[color:var(--brand-accent)] shadow-[var(--shadow-soft)]">
-                <Code2 className="size-5" />
-              </div>
-              <div className="space-y-2">
-                <span
-                  className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
-                  style={{ color: "var(--brand-accent)" }}
-                >
-                  API
-                </span>
-                <h2 className="text-[1.8rem] font-semibold tracking-tight text-foreground">
-                  Build with the portal API
-                </h2>
-                <p className="max-w-xl text-[0.98rem] leading-7 text-muted-foreground">
-                  Explore the Swagger documentation and connect applications,
-                  workflows, or dashboards directly to portal data.
-                </p>
-              </div>
-              <div className="mt-auto">
-                <Button asChild variant="outline">
-                  <a href={apiDocsUrl} target="_blank" rel="noreferrer">
-                    Open API docs
-                    <ArrowRight className="size-4" />
-                  </a>
-                </Button>
-              </div>
+          {reports.length === 0 ? (
+            <p className="text-muted-foreground">No reports published yet.</p>
+          ) : (
+            <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+              {reports.map((report) => (
+                <ReportCard key={report.slug} report={report} />
+              ))}
             </div>
-          </div>
+          )}
         </section>
+        <section className="mb-12">
+  <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-end">
+    <div className="space-y-0">
+      <span
+        className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
+        style={{ color: "var(--brand-accent)" }}
+      >
+        Tools
+      </span>
+
+      <Heading level={2} className="font-display text-foreground">
+        More ways to use the portal
+      </Heading>
+
+      <p className="max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
+        Request new datasets or connect directly through the API to build apps,
+        workflows, and dashboards.
+      </p>
+    </div>
+  </div>
+
+  <div className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-6">
+    <div className="relative overflow-hidden rounded-3xl border border-[color:color-mix(in_srgb,var(--brand-accent)_45%,white)] px-6 py-6 sm:px-8 sm:py-8">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(135deg, color-mix(in srgb, var(--brand-accent) 88%, black) 0%, var(--brand-accent) 52%, color-mix(in srgb, var(--brand-accent) 78%, white) 100%)",
+        }}
+      />
+
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-60"
+        style={{
+          background:
+            "radial-gradient(circle at top right, color-mix(in srgb, white 24%, transparent) 0%, transparent 34%)",
+        }}
+      />
+
+      <div className="relative flex h-full flex-col gap-5">
+        <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/16 text-white shadow-[var(--shadow-soft)] ring-1 ring-white/20 backdrop-blur-sm">
+          <Mail className="size-5" />
+        </div>
+
+        <div className="space-y-2">
+          <span className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em] text-white/75">
+            Request data
+          </span>
+
+          <h3 className="text-[1.8rem] font-semibold tracking-tight text-white">
+            Need a dataset that is not here yet?
+          </h3>
+
+          <p className="max-w-xl text-[0.98rem] leading-7 text-white/78">
+            Send a request and let the data team know what information would be
+            most useful to publish next.
+          </p>
+        </div>
+
+        <div className="mt-auto">
+          <Button
+            asChild
+            className="!bg-white !text-[color:var(--brand-accent)] hover:!bg-white/92"
+          >
+            <a href={requestDataHref}>
+              Request data
+              <ArrowRight className="size-4" />
+            </a>
+          </Button>
+        </div>
+      </div>
+    </div>
+
+    <div className="surface-panel relative overflow-hidden rounded-3xl px-6 py-6 sm:px-8 sm:py-8">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(135deg, color-mix(in srgb, var(--brand-accent) 4%, white) 0%, white 52%)",
+        }}
+      />
+
+      <div className="relative flex h-full flex-col gap-5">
+        <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-[color:var(--brand-accent)] shadow-[var(--shadow-soft)]">
+          <Code2 className="size-5" />
+        </div>
+
+        <div className="space-y-2">
+          <span
+            className="block text-[0.82rem] font-semibold uppercase tracking-[0.18em]"
+            style={{ color: "var(--brand-accent)" }}
+          >
+            API
+          </span>
+
+          <h3 className="text-[1.8rem] font-semibold tracking-tight text-foreground">
+            Build with the portal API
+          </h3>
+
+          <p className="max-w-xl text-[0.98rem] leading-7 text-muted-foreground">
+            Explore the Swagger documentation and connect applications,
+            workflows, or dashboards directly to portal data.
+          </p>
+        </div>
+
+        <div className="mt-auto">
+          <Button asChild variant="outline">
+            <a href={apiDocsUrl} target="_blank" rel="noreferrer">
+              Open API docs
+              <ArrowRight className="size-4" />
+            </a>
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
       </Container>
     </div>
   );

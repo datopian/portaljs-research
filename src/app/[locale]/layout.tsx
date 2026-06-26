@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import SiteDemoBanner from "@/components/layout/SiteDemoBanner";
 import QuerylessAssistant from "@/components/queryless/QuerylessAssistant";
 import { Suspense } from "react";
 import type { CSSProperties } from "react";
@@ -60,6 +61,7 @@ export default async function RootLayout({
       >
         <Suspense>
           <NextIntlClientProvider locale={locale} messages={messages}>
+            <SiteDemoBanner />
             <Header />
             <QueryProvider>
               <main className="flex-grow">{children}</main>
