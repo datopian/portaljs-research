@@ -324,6 +324,16 @@ function persistDailyUsage(dateKey: string, count: number) {
 const assistantWelcome =
   "Hi, I’m Queryless. Ask in plain English, and I’ll use the current page context to help you explore the portal.";
 
+const assistantIntro =
+  "Hi, I'm Queryless \u{1F44B}\n\nAsk questions in plain English. No SQL needed.\n\nTry things like:\n- \"What climate datasets are available?\"\n- \"Find datasets about public health.\"\n- \"Which organisations have the most datasets?\"\n- \"Show datasets published in the last year.\"\n\nI'm aware of the page you are browsing \u{1F440}";
+void assistantWelcome;
+const starterPrompts = [
+  "What climate datasets are available?",
+  "Find datasets about public health.",
+  "Which organisations have the most datasets?",
+  "Show datasets published in the last year.",
+];
+
 function MarkdownContent({ content }: { content: string }) {
   const { mainContent, methodContent } = useMemo(
     () => parseAssistantContent(content),
@@ -337,7 +347,7 @@ function MarkdownContent({ content }: { content: string }) {
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeRaw]}
           components={{
-            p: ({ ...props }) => <p className="mb-2 last:mb-0 leading-7" {...props} />,
+            p: ({ ...props }) => <p className="mb-0.5 last:mb-0 leading-7" {...props} />,
             strong: ({ ...props }) => <strong className="font-semibold" {...props} />,
             a: ({ href, children, ...props }) =>
               isLocalLink(href) ? (
@@ -426,7 +436,7 @@ function MarkdownContent({ content }: { content: string }) {
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypeRaw]}
               components={{
-                p: ({ ...props }) => <p className="mb-2 last:mb-0 leading-7" {...props} />,
+                p: ({ ...props }) => <p className="mb-0.5 last:mb-0 leading-7" {...props} />,
                 a: ({ href, children, ...props }) =>
                   isLocalLink(href) ? (
                     <Link href={href || "/"} className="font-medium underline underline-offset-4">
@@ -485,7 +495,7 @@ export default function QuerylessAssistant() {
     {
       id: "assistant-welcome",
       role: "assistant",
-      content: assistantWelcome,
+      content: assistantIntro,
     },
   ]);
   const [input, setInput] = useState("");
@@ -512,6 +522,19 @@ export default function QuerylessAssistant() {
       pageDirective: getPageDirective(pathname),
     }),
     [pathname]
+  );
+
+  const scrollMessagesToBottom = useCallback(
+    (behavior: ScrollBehavior = "auto") => {
+      const container = messagesContainerRef.current;
+      if (!container) return;
+
+      container.scrollTo({
+        top: container.scrollHeight,
+        behavior,
+      });
+    },
+    []
   );
 
   useEffect(() => {
@@ -561,6 +584,7 @@ export default function QuerylessAssistant() {
 
     void recent;
     hasExchangeSinceLastPageChangeRef.current = true;
+    shouldAutoScrollRef.current = true;
     const assistantMessageId = `assistant-${Date.now()}`;
 
     const requestMessages: ChatMessage[] = [
@@ -672,6 +696,9 @@ export default function QuerylessAssistant() {
                         message.id === assistantMessageId ? { ...message, content: partial } : message
                       )
                     );
+                    if (shouldAutoScrollRef.current) {
+                      scrollMessagesToBottom();
+                    }
                     streamRafRef.current = null;
                   });
                 }
@@ -738,7 +765,7 @@ export default function QuerylessAssistant() {
     } finally {
       setIsSending(false);
     }
-  }, [context.pageDirective, context.path, input, isSending, messages]);
+  }, [context.pageDirective, context.path, input, isSending, messages, scrollMessagesToBottom]);
 
   useEffect(() => {
     const handleOpenQueryless = (event: Event) => {
@@ -907,7 +934,7 @@ export default function QuerylessAssistant() {
 
   useEffect(() => {
     const didAddNewMessage = messages.length > previousMessageCountRef.current;
-    if (!shouldAutoScrollRef.current && !didAddNewMessage) {
+    if (!shouldAutoScrollRef.current && !didAddNewMessage && !isSending) {
       previousMessageCountRef.current = messages.length;
       return;
     }
@@ -920,7 +947,7 @@ export default function QuerylessAssistant() {
 
     container.scrollTop = container.scrollHeight;
     previousMessageCountRef.current = messages.length;
-  }, [messages, isSending]);
+  }, [isSending, messages]);
 
   useEffect(() => {
     if (isOpen) {
@@ -950,7 +977,7 @@ export default function QuerylessAssistant() {
       {
         id: "assistant-welcome",
         role: "assistant",
-        content: assistantWelcome,
+        content: assistantIntro,
       },
       {
         id: contextMessageId,
@@ -994,9 +1021,17 @@ export default function QuerylessAssistant() {
                   Queryless AI
                 </CardTitle>
                 <p className="text-sm text-muted-foreground">
-                  Ask in plain English about this portal and the page you’re viewing.
+                  Ask questions in plain English about the data.
                 </p>
-             
+                <div className="flex flex-wrap gap-2">
+                  <span
+                    className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${getDailyUsagePillClassName(
+                      dailyUsageCount
+                    )}`}
+                  >
+                    Daily questions: {dailyUsageCount} / {QUERYLESS_DAILY_LIMIT_MAX_REQUESTS}
+                  </span>
+                </div>
               </div>
 
               <div className="flex shrink-0 items-center gap-1">
@@ -1064,6 +1099,7 @@ export default function QuerylessAssistant() {
                   </div>
                 );
               })}
+    
 
               {isSending ? (
                 <div className="max-w-[90%] rounded-2xl border border-[color:var(--border)] bg-white px-4 py-3 text-sm text-muted-foreground">
@@ -1084,16 +1120,6 @@ export default function QuerylessAssistant() {
               {rateLimitMessage ? (
                 <p className="mb-2 text-sm text-amber-700">{rateLimitMessage}</p>
               ) : null}
-
-              <div className="mb-3">
-                <span
-                  className={`inline-flex rounded-full px-2.5 py-1 text-xs font-medium ${getDailyUsagePillClassName(
-                    dailyUsageCount
-                  )}`}
-                >
-                  Daily questions: {dailyUsageCount} / {QUERYLESS_DAILY_LIMIT_MAX_REQUESTS}
-                </span>
-              </div>
 
               <div className="flex items-end gap-2">
                 <Textarea
@@ -1137,3 +1163,4 @@ export default function QuerylessAssistant() {
     </>
   );
 }
+

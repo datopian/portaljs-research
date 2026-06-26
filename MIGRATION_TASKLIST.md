@@ -94,13 +94,13 @@ This tasklist tracks implementation of all `_temp` features into `v2`. Check ite
 
 ## Phase 9: Queryless AI
 
-- [ ] Use `NEXT_PUBLIC_QUERYLESS_ENABLED` as the public enablement flag.
-- [ ] Keep Queryless server env vars: `QUERYLESS_URL`, `QUERYLESS_TOKEN`, `QUERYLESS_MODEL`.
-- [ ] Update Queryless route instructions to use canonical `/r/` resource URLs.
+- [x] Use `NEXT_PUBLIC_QUERYLESS_ENABLED` as the public enablement flag.
+- [x] Keep Queryless server env vars: `QUERYLESS_URL`, `QUERYLESS_TOKEN`, `QUERYLESS_MODEL`.
+- [x] Update Queryless route instructions to use canonical `/r/` resource URLs.
 - [x] Restore `/ai-terms-of-use`.
 - [x] Link Queryless footer to `/ai-terms-of-use`.
-- [ ] Preserve streaming, rate limits, daily limits, Markdown rendering, and Vega rendering.
-- [ ] Validate Queryless on home, search, dataset, resource, organization, group, and topic pages.
+- [x] Preserve streaming, rate limits, daily limits, Markdown rendering, and Vega rendering.
+- [x] Validate Queryless on home, search, dataset, resource, organization, group, and topic pages.
 
 ## Phase 10: SEO, Structured Data, Analytics
 
