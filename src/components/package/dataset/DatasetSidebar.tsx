@@ -34,13 +34,6 @@ export default async function DatasetSidebar({
   const dms = envVars.dms ?? "";
   const datasetDoi = generateMockDoi(dataset.name);
   const datasetDoiUrl = `https://doi.org/${datasetDoi}`;
-  const uniqueFormats = [
-    ...new Set(
-      (dataset.resources ?? [])
-        .map((resource) => resource.format?.toUpperCase())
-        .filter(Boolean),
-    ),
-  ];
   const datasetSources = Array.isArray(dataset.source)
     ? dataset.source.filter(Boolean)
     : [];
@@ -51,11 +44,6 @@ export default async function DatasetSidebar({
       <section className="surface-panel rounded-2xl p-4 sm:p-5">
       {dataset.type === "dataset" && <div className="mb-5"><DatasetReusePanel  dataset={dataset} /></div>}
         <div className="space-y-3">
-
-          <SidebarItem
-            label={t("Common.formats")}
-            value={uniqueFormats.length ? uniqueFormats.join(", ") : "--"}
-          />
           <SidebarItem
             label="DOI"
             value={
@@ -121,6 +109,28 @@ export default async function DatasetSidebar({
           )}
 
           <SidebarItem label={t("Common.version")} value={dataset.version} />
+          <SidebarItem
+            label={t("Common.tags")}
+            value={
+              dataset.tags?.length ? (
+                <span className="text-[13px] leading-5">
+                  {dataset.tags.map((tag, index) => (
+                    <span key={tag.id}>
+                      <Link
+                        href={`/search?tags=${tag.name}`}
+                        className="font-medium text-primary transition hover:underline"
+                      >
+                        {tag.display_name ?? tag.name}
+                      </Link>
+                      {index < dataset.tags.length - 1 ? ", " : ""}
+                    </span>
+                  ))}
+                </span>
+              ) : (
+                "--"
+              )
+            }
+          />
         </div>
       </section>
       {dataset.type === "dataset" && (

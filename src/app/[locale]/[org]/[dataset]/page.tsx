@@ -9,7 +9,7 @@ import { getTranslations } from "next-intl/server";
 import { Metadata } from "next";
 import { buildLocalizedMetadata } from "@/lib/seo";
 import { Link } from "@/i18n/navigation";
-import { FolderKanban, Tags } from "lucide-react";
+import { Files, FolderKanban } from "lucide-react";
 import { toPublicGroupSlug } from "@/lib/portal-name";
 
 type DatasetPageParams = {
@@ -63,6 +63,14 @@ export default async function DatasetPage({ params }: DatasetPageProps) {
     return notFound();
   }
 
+  const uniqueFormats = [
+    ...new Set(
+      (dataset.resources ?? [])
+        .map((resource) => resource.format)
+        .filter(Boolean),
+    ),
+  ];
+
   return (
     <Page
       breadcrumb={{
@@ -105,23 +113,22 @@ export default async function DatasetPage({ params }: DatasetPageProps) {
           ) : null,
         },
         {
-          value: dataset.tags?.length ? (
+          value: uniqueFormats.length ? (
             <span className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-1.5">
-                <Tags className="size-4 text-primary/80" />
+                <Files className="size-4 text-primary/80" />
                 <span className="font-medium text-foreground">
-                  {t("Common.tags")}
+                  {t("Common.formats")}
                 </span>
               </span>
-              <span className="flex flex-wrap items-center gap-2">
-                {dataset.tags.map((tag) => (
-                  <Link
-                    key={tag.id}
-                    href={`/search?tags=${tag.name}`}
-                    className="rounded-full border border-[color:var(--border)] bg-white px-2.5 py-1 text-xs font-medium text-foreground transition hover:[border-color:var(--brand-accent)] hover:[color:var(--brand-accent)]"
+              <span className="flex flex-wrap items-center gap-x-1 gap-y-1 text-sm text-foreground/88">
+                {uniqueFormats.map((format) => (
+                  <span
+                    key={format}
+                    className="rounded-full border border-[color:var(--border)] bg-white px-2.5 py-1 text-xs font-medium text-foreground"
                   >
-                    {tag.display_name ?? tag.name}
-                  </Link>
+                    {String(format)}
+                  </span>
                 ))}
               </span>
             </span>

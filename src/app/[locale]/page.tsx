@@ -10,6 +10,7 @@ import { HeroAbstractVisual } from "@/components/layout/PageHero";
 import { searchDatasets } from "@/lib/ckan/dataset";
 import { getAllGroups } from "@/lib/ckan/group";
 import { getAllReports } from "@/lib/reports";
+import { cn } from "@/lib/utils";
 import { isQuerylessEnabled } from "@/lib/queryless";
 import { toPublicGroupSlug } from "@/lib/portal-name";
 import { ArrowRight, Code2, FolderKanban, Mail } from "lucide-react";
@@ -39,9 +40,9 @@ export default async function Home() {
   const requestDataHref =
     "mailto:data@example.com?subject=Open%20Data%20Request";
   const suggestedPrompts = [
-    "Compare GDP trends since 2000",
-    "Show population growth by country",
-    "Track daily oil prices over time",
+    "How has global temperature changed since 2000?",
+    "Compare atmospheric CO2 trends since 2000",
+    "Show population projections to 2100",
   ];
 
   const [featuredDatasetsResult, statsResult, visualizationsResult, allGroups] =
@@ -72,13 +73,22 @@ export default async function Home() {
 
   const datasets = featuredDatasetsResult.datasets;
   const visualizationCount = visualizationsResult.count ?? 0;
+  const groupFacetItems = statsResult.search_facets?.groups?.items ?? [];
+  const groupDatasetCounts = new Map(
+    groupFacetItems
+      .filter((item) => (item.count ?? 0) > 0 && item.name)
+      .map((item) => [item.name, item.count ?? 0]),
+  );
+
   const groups = [...allGroups]
+    .filter((group) => groupDatasetCounts.has(group.name))
     .sort((a, b) =>
       (a.display_name || a.title || a.name).localeCompare(
         b.display_name || b.title || b.name,
       ),
     )
     .slice(0, 6);
+  const groupColumnCount = Math.max(3, Math.min(6, groups.length || 3));
   const reports = getAllReports().slice(0, 2);
   const stats = [
     {
@@ -251,11 +261,20 @@ export default async function Home() {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-6">
+          <div
+            className={cn(
+              "grid grid-cols-1 gap-4 sm:grid-cols-2",
+              groupColumnCount === 3 && "xl:grid-cols-3",
+              groupColumnCount === 4 && "xl:grid-cols-4",
+              groupColumnCount === 5 && "xl:grid-cols-5",
+              groupColumnCount === 6 && "xl:grid-cols-6",
+            )}
+          >
             {groups.map((group) => {
               const groupTitle =
                 group.display_name || group.title || group.name;
-              const datasetCount = group.package_count ?? 0;
+              const datasetCount =
+                groupDatasetCounts.get(group.name) ?? group.package_count ?? 0;
               const imageUrl = group.image_display_url || group.image_url;
               return (
                 <Link
@@ -466,4 +485,3 @@ export default async function Home() {
     </div>
   );
 }
-
