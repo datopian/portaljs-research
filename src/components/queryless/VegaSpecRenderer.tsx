@@ -57,7 +57,7 @@ export default function VegaSpecRenderer({ specText }: { specText: string }) {
       normalizedSpec.autosize = {
         type: "fit-x",
         contains: "padding",
-        resize: true,
+        resize: false,
       };
     }
 
@@ -128,7 +128,10 @@ export default function VegaSpecRenderer({ specText }: { specText: string }) {
           Could not render chart: {renderError}
         </div>
       ) : (
-        <div ref={containerRef} className="max-h-[420px] min-h-[220px] w-full overflow-auto" />
+        <div
+          ref={containerRef}
+          className="max-h-[420px] min-h-[220px] w-full min-w-0 overflow-x-hidden overflow-y-auto [&_.vega-embed]:w-full [&_.vega-embed>svg]:block [&_.vega-embed>svg]:max-w-full"
+        />
       )}
     </div>
   );

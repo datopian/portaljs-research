@@ -223,6 +223,23 @@ function parseAssistantContent(content: string): ParsedAssistantContent {
   return { mainContent, methodContent };
 }
 
+function normalizeAssistantMarkdown(content: string) {
+  return content
+    .replace(/\r\n/g, "\n")
+    .split(/(```[\s\S]*?```)/g)
+    .map((part, index) => {
+      if (index % 2 === 1) return part;
+
+      return part
+        .replace(
+          /([.!?:])(?=(Now|Perfect|Next|Then|Here|Let me|I found|I'll|I can)\b)/g,
+          "$1\n\n"
+        )
+        .replace(/([.!?])(?=[A-Z][a-z])/g, "$1\n\n");
+    })
+    .join("");
+}
+
 function isInlineCodeNode(className: string | undefined, children: React.ReactNode) {
   const text = String(children);
   return !className && !text.includes("\n");
@@ -330,10 +347,18 @@ function MarkdownContent({ content }: { content: string }) {
     () => parseAssistantContent(content),
     [content]
   );
+  const normalizedMainContent = useMemo(
+    () => normalizeAssistantMarkdown(mainContent),
+    [mainContent]
+  );
+  const normalizedMethodContent = useMemo(
+    () => (methodContent ? normalizeAssistantMarkdown(methodContent) : null),
+    [methodContent]
+  );
 
   return (
     <div className="space-y-3">
-      {mainContent ? (
+      {normalizedMainContent ? (
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[rehypeRaw]}
@@ -410,11 +435,11 @@ function MarkdownContent({ content }: { content: string }) {
             },
           }}
         >
-          {mainContent}
+          {normalizedMainContent}
         </ReactMarkdown>
       ) : null}
 
-      {methodContent ? (
+      {normalizedMethodContent ? (
         <details className="rounded-2xl border border-[color:var(--border)] bg-white/80 px-4 py-3">
           <summary className="cursor-pointer list-none text-sm font-medium text-foreground">
             <span className="inline-flex items-center gap-2">
@@ -470,7 +495,7 @@ function MarkdownContent({ content }: { content: string }) {
                 },
               }}
             >
-              {methodContent}
+              {normalizedMethodContent}
             </ReactMarkdown>
           </div>
         </details>
