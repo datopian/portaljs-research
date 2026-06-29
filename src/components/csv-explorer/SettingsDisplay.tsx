@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { useResourceDataSafe } from "./DataProvider";
 import { PinButton } from "./TableHeadCell";
-import { CheckIcon, XIcon } from "lucide-react";
+import { CheckIcon, Settings, XIcon } from "lucide-react";
 import { Button } from "../ui/button";
 import { useTranslations } from "next-intl";
 
 export function SettingsDisplayButton() {
   const { toggleSettingsDropdown, isSettingsDropdownOpen } =
     useResourceDataSafe();
-  const t = useTranslations();
+
   return (
     <div className="relative inline-block mb-4">
       <Button
@@ -16,8 +16,9 @@ export function SettingsDisplayButton() {
         aria-haspopup="true"
         aria-expanded={isSettingsDropdownOpen}
         variant="outline"
+        size={"sm"}
       >
-        <span className="hidden sm:block">{t("Common.settings")}</span>
+        <Settings className="h-4 w-4" />
       </Button>
     </div>
   );

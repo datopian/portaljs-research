@@ -2,7 +2,6 @@ import { SearchStateProvider } from "@/components/package/search/SearchContext";
 import { notFound } from "next/navigation";
 import SearchResultsSection from "@/components/package/search/SearchResultsSection";
 import Page from "@/components/layout/Page";
-import { formatDateToDDMMYYYY } from "@/lib/utils";
 import { getGroup } from "@/lib/ckan/group";
 import { getTranslations } from "next-intl/server";
 import { Metadata } from "next";
@@ -89,16 +88,6 @@ export default async function TopicPage({ params }: TopicPageProps) {
       }}
       title={topicData.title}
       description={topicData.description}
-      metadata={[
-        {
-          title: t("Common.created"),
-          value: formatDateToDDMMYYYY(topicData.created ?? ""),
-        },
-        {
-          title: t("Dataset.total"),
-          value: topicData.package_count ?? 0,
-        },
-      ]}
     >
       <SearchStateProvider defaultGroup={topicData.name}>
         <SearchResultsSection embedded showSearchForm />

@@ -61,7 +61,9 @@ export default function Header() {
           <div className="hidden items-center gap-3 lg:flex">
             {envVars.dms ? (
               <Button asChild size="sm" variant="outline">
-                <a href={loginUrl}>Login</a>
+                <a href={loginUrl} target="_blank" rel="noopener noreferrer">
+                  Login
+                </a>
               </Button>
             ) : null}
             <LanguageSwitcher />

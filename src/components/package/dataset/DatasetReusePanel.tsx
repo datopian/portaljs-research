@@ -75,7 +75,6 @@ export default function DatasetReusePanel({ dataset }: { dataset: Dataset }) {
       }),
     [accessStyle, dataset],
   );
-  const primaryDownloadUrl = dataset.resources?.[0]?.url;
 
   const copyValue = async (label: string, value?: string) => {
     if (!value) return;
@@ -109,17 +108,6 @@ export default function DatasetReusePanel({ dataset }: { dataset: Dataset }) {
 
         {isOpen ? (
           <div className="absolute left-0 top-full z-20 mt-2 w-full overflow-hidden rounded-2xl border border-[color:var(--border)] bg-white py-1.5 shadow-[0_20px_40px_-24px_rgba(15,23,42,0.4)]">
-            {primaryDownloadUrl ? (
-              <a
-                href={primaryDownloadUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex w-full items-center gap-2.5 px-3.5 py-2.5 text-left text-sm font-medium text-foreground transition hover:bg-accent/5 hover:text-accent"
-              >
-                <Download className="size-3.5 text-muted-foreground" />
-                Download dataset
-              </a>
-            ) : null}
             <button
               type="button"
               onClick={() => {

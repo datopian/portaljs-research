@@ -46,6 +46,10 @@ export default async function DatasetSidebar({
       {dataset.type === "dataset" && <div className="mb-5"><DatasetReusePanel  dataset={dataset} /></div>}
         <div className="space-y-3">
           <SidebarItem
+            label="Files"
+            value={dataset.resources?.length ?? 0}
+          />
+          <SidebarItem
             label="DOI"
             value={
               <a
