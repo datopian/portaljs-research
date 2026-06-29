@@ -1,0 +1,116 @@
+{
+  "Site": {
+    "title": "Research Portal",
+    "description": "Discover and explore research datasets, reports, and reusable public data through the Research Portal.",
+    "homeTitle": "Home"
+  },
+  "Common": {
+    "organization": "Organization",
+    "organizations": "Organizations",
+    "groups": "Topics",
+    "group": "Topic",
+    "topic": "Topic",
+    "topics": "Topics",
+    "dataset": "Dataset",
+    "datasets": "Datasets",
+    "report": "Report",
+    "reports": "Reports",
+    "visualization": "Visualization",
+    "visualizations": "Visualizations",
+    "resource": "Resource",
+    "resources": "Resources",
+    "format": "Format",
+    "formats": "Formats",
+    "tag": "Tag",
+    "tags": "Tags",
+    "noData": "No data found",
+    "noResults": "No results found",
+    "viewAll": "Explore All",
+    "metadata": "Metadata",
+    "copy": "Copy",
+    "copied": "Copied",
+    "exploreAll": "Explore all",
+    "export": "Export",
+    "preview": "Preview",
+    "download": "Download",
+    "viewDataset": "View dataset",
+    "viewVisualization": "View",
+    "openVisualization": "Open visualization",
+    "api": "API",
+    "activityStream": "Activity Stream",
+    "code": "Code",
+    "created": "Date created",
+    "updated": "Date updated",
+    "version": "Version",
+    "license": "License",
+    "size": "Size",
+    "close": "Close",
+    "searchPlaceholder": "Search...",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "clearAll": "Clear all",
+    "loading": "Loading...",
+    "loadingData": "Loading data...",
+    "settings": "Settings",
+    "pagination": "Pagination",
+    "checkAll": "Check all",
+    "page": "Page",
+    "previous": "Previous",
+    "next": "Next",
+    "search": "Search"
+  },
+  "Dataset": {
+    "latest": "Latest datasets",
+    "datasetsCount": "{count, plural, one {# dataset} other {# datasets}}",
+    "total": "Total datasets",
+    "resourcesTitle": "Data and Resources ({count})",
+    "noResources": "No resources available for this dataset."
+  },
+  "Activity": {
+    "error:": " Error loading {type} activity stream: {message}",
+    "notFound": "No activities found."
+  },
+  "Home": {
+    "title": "Welcome to Research Portal",
+    "tagline": "Discover, search, and access research datasets through the Research Portal."
+  },
+  "OrganizationsPage": {
+    "description": "Explore the full list of organizations sharing data on our portal.",
+    "searchPlaceholder": "Search organizations...",
+    "noOrganizations": "No organizations found"
+  },
+  "GroupsPage": {
+    "description": "Explore all topics that organize and curate datasets across the portal.",
+    "searchPlaceholder": "Search topics...",
+    "noGroups": "No topics found"
+  },
+  "TopicsPage": {
+    "description": "Explore all topics that organize and curate datasets across the portal.",
+    "searchPlaceholder": "Search topics...",
+    "noTopics": "No topics found"
+  },
+  "Search": {
+    "title": "Search Datasets",
+    "subtitle": "Find datasets to explore, analyze, and download.",
+    "filters": "Filters",
+    "headerWithQuery": "Search {type} for \"{query}\"",
+    "headerCount": "{count, plural, one {# dataset} other {# datasets}}",
+    "headerCountVisualizations": "{count, plural, one {# visualization} other {# visualizations}}",
+    "headerNoResults": "No results found",
+    "headerShowing": "Showing {count} {type}",
+    "sortLabel": "Sort:",
+    "sortRelevance": "Relevance",
+    "sortLastModified": "Last modified",
+    "sortNameAsc": "Name (A-Z)",
+    "sortNameDesc": "Name (Z-A)",
+    "searchPlaceholder": "Type to search..."
+  },
+  "Preview": {
+    "columns": "Columns",
+    "searchColumnsPlaceholder": "Search columns...",
+    "checkAllColumns": "Check all columns",
+    "noColumns": "No columns found",
+    "rowsPerPage": "Rows per page",
+    "pagination": "Page {page} of {total}"
+  }
+}

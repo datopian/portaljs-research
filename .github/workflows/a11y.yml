@@ -1,0 +1,49 @@
+name: Accessibility E2E Tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - staging
+
+jobs:
+  cypress:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Debug environment
+        run: |
+          node -v
+          npm -v
+          npx tsc -v
+          node -p "require('./node_modules/next/package.json').version"
+
+      - name: Build app
+        env:
+          NEXT_PUBLIC_DMS: ${{ secrets.NEXT_PUBLIC_DMS }}
+        run: |
+          npm run routes:gen
+          npm run build || (
+            echo "Build failed. Dumping generated Next type validator..."
+            find .next/types -maxdepth 5 -type f | sort || true
+            sed -n '1,220p' .next/types/validator.ts || true
+            exit 1
+          )
+
+      - name: Run E2E (Cypress + Axe)
+        env:
+          NEXT_PUBLIC_DMS: ${{ secrets.NEXT_PUBLIC_DMS }}
+        run: npx start-server-and-test "npm run start" http://localhost:3000 "npm run cy:run"

@@ -1,0 +1,18 @@
+:root {
+  /*
+   * Primary brand controls.
+   * Override these values to quickly re-skin the portal.
+   */
+  --brand-accent: #2563eb;
+  --brand-accent-foreground: #ffffff;
+  --brand-logo: var(--brand-accent);
+
+  --brand-surface-tint: color-mix(in srgb, var(--brand-accent) 3%, white);
+  --brand-surface-tint-strong: color-mix(
+    in srgb,
+    var(--brand-accent) 6%,
+    white
+  );
+  --brand-border-tint: color-mix(in srgb, var(--brand-accent) 8%, white);
+}
+

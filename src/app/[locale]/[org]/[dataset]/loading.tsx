@@ -1,0 +1,5 @@
+import { DatasetDetailSkeleton } from "@/components/layout/PageLoading";
+
+export default function Loading() {
+  return <DatasetDetailSkeleton />;
+}
