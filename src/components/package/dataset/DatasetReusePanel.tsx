@@ -6,7 +6,6 @@ import {
   ChevronDown,
   Clipboard,
   Code2,
-  Download,
   Fingerprint,
   GraduationCap,
   Link2,
