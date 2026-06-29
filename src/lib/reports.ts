@@ -1,6 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
-import matter from "gray-matter";
+import yaml from "js-yaml";
 
 export interface ReportMeta {
   slug: string;
@@ -12,16 +12,46 @@ export interface ReportMeta {
 
 const REPORTS_DIR = path.join(process.cwd(), "content/reports");
 
+function parseFrontmatter(raw: string): {
+  data: Record<string, unknown>;
+  content: string;
+} {
+  const normalized = raw.replace(/^\uFEFF/, "");
+
+  if (!normalized.startsWith("---\n") && !normalized.startsWith("---\r\n")) {
+    return { data: {}, content: raw };
+  }
+
+  const delimiterMatch = /\r?\n---\r?\n/.exec(normalized);
+
+  if (!delimiterMatch?.index) {
+    return { data: {}, content: raw };
+  }
+
+  const frontmatter = normalized.slice(4, delimiterMatch.index);
+  const content = normalized.slice(delimiterMatch.index + delimiterMatch[0].length);
+  const parsed = yaml.load(frontmatter);
+  const data =
+    parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+
+  return { data: data as Record<string, unknown>, content };
+}
+
+function toString(value: unknown): string {
+  return typeof value === "string" ? value : "";
+}
+
 function readReportFrontmatter(slug: string, raw: string): ReportMeta {
-  const { data } = matter(raw);
+  const { data } = parseFrontmatter(raw);
 
   return {
     slug,
-    title: data.title ?? "",
-    date: data.date ?? "",
-    description: data.description ?? "",
+    title: toString(data.title),
+    date: toString(data.date),
+    description: toString(data.description),
     relatedDatasets: Array.isArray(data.relatedDatasets)
       ? data.relatedDatasets
+          .filter((dataset): dataset is string => typeof dataset === "string")
       : [],
   };
 }
@@ -49,7 +79,7 @@ export function getReportSource(slug: string): {
 } {
   const filePath = path.join(REPORTS_DIR, `${slug}.mdx`);
   const raw = fs.readFileSync(filePath, "utf8");
-  const { content } = matter(raw);
+  const { content } = parseFrontmatter(raw);
 
   return {
     content,

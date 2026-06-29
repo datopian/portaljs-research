@@ -509,8 +509,8 @@ export default function QuerylessAssistant() {
 
   const context = useMemo(
     () => ({
-      path: pathname,
-      pageDirective: getPageDirective(pathname),
+      path: pathname ?? "/",
+      pageDirective: getPageDirective(pathname ?? "/"),
     }),
     [pathname]
   );

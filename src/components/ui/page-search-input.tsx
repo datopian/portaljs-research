@@ -22,7 +22,7 @@ export default function PageSearchInput({
   const [value, setValue] = useState(defaultValue);
 
   function updateQueryParam(newValue: string) {
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams(searchParams?.toString() ?? "");
 
     if (newValue) {
       params.set(paramName, newValue);

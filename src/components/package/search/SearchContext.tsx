@@ -71,8 +71,8 @@ export const SearchStateProvider = ({
 
   // 1. Sync state from URL once
   const initialOptions: PackageSearchOptions = useMemo(() => {
-    const getParam = (key: string) => searchParams.get(key);
-    const getParamArray = (key: string) => searchParams.getAll(key);
+    const getParam = (key: string) => searchParams?.get(key) ?? null;
+    const getParamArray = (key: string) => searchParams?.getAll(key) ?? [];
 
     return {
       offset: parseInt(getParam("offset") ?? "0"),

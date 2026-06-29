@@ -41,12 +41,14 @@ export default function SearchForm({
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
+    const currentPath = pathname ?? window.location.pathname;
+
     if (onSubmit) {
       onSubmit(q ?? "");
       return false;
     }
 
-    if (querylessEnabled && pathname === "/") {
+    if (querylessEnabled && currentPath === "/") {
       const event = new CustomEvent(QUERYLESS_OPEN_EVENT, {
         cancelable: true,
         detail: {
@@ -64,7 +66,9 @@ export default function SearchForm({
       return false;
     }
 
-    router.push(`${pathname === "/" ? "/search" : pathname}?query=${encodeURIComponent(q)}`);
+    router.push(
+      `${currentPath === "/" ? "/search" : currentPath}?query=${encodeURIComponent(q)}`
+    );
     return false;
   };
 
@@ -78,10 +82,11 @@ export default function SearchForm({
       return false;
     }
 
+    const currentPath = pathname ?? window.location.pathname;
     const params = new URLSearchParams(window.location.search);
     params.delete("query");
     const newSearch = params.toString();
-    const newPath = newSearch ? `${pathname}?${newSearch}` : pathname;
+    const newPath = newSearch ? `${currentPath}?${newSearch}` : currentPath;
     router.push(newPath);
     return false;
   };
