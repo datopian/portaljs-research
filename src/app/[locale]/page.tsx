@@ -124,8 +124,7 @@ export default async function Home() {
         <HeroAbstractVisual
           intensity="strong"
           align="right"
-          wrapperClassName="top-18 hidden h-[24rem] w-[30rem] lg:block xl:top-16 xl:h-[28rem] xl:w-[36rem] 2xl:h-[30rem] 2xl:w-[40rem]"
-          className="top-0"
+          wrapperClassName="top-20 hidden h-[18rem] w-[24rem] lg:block xl:top-[4.5rem] xl:h-[22rem] xl:w-[30rem] 2xl:h-[24rem] 2xl:w-[32rem]"
         />
         <Container className="relative z-10 flex min-h-[calc(100vh-200px)] flex-col px-4 pt-8 pb-8">
           <div className="mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center text-center">
@@ -488,4 +487,3 @@ export default async function Home() {
     </div>
   );
 }
-

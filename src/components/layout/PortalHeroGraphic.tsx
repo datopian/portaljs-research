@@ -67,44 +67,43 @@ export default function PortalHeroGraphic({
     <div
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute inset-y-0 hidden w-[28rem] overflow-hidden lg:block xl:w-[34rem]",
-        align === "right" && "right-0",
+        "pointer-events-none absolute hidden overflow-hidden lg:block",
+        "top-6 h-[17rem] w-[22rem] xl:top-5 xl:h-[20rem] xl:w-[27rem]",
+        align === "right" && "right-0 xl:right-2",
         align === "center" && "left-1/2 -translate-x-1/2",
         wrapperClassName,
       )}
     >
       <div
         className={cn(
-          "absolute inset-y-0 w-full text-primary",
-          align === "right" && "right-10 xl:right-12",
-          align === "center" && "inset-x-0",
+          "relative h-full w-full text-primary",
           className,
         )}
       >
         <div
           className={cn(
-            "absolute right-2 top-1/2 h-64 w-64 -translate-y-1/2 rounded-full bg-primary/8 blur-3xl",
+            "absolute right-3 top-1/2 h-48 w-48 -translate-y-1/2 rounded-full bg-primary/8 blur-3xl xl:right-2 xl:h-60 xl:w-60",
             tone.glow,
           )}
         />
 
         <div
           className={cn(
-            "absolute bottom-8 right-10 h-48 w-48 rounded-full border border-primary/10 bg-primary/4",
+            "absolute bottom-3 right-8 h-36 w-36 rounded-full border border-primary/10 bg-primary/4 xl:bottom-5 xl:h-44 xl:w-44",
             tone.ring,
           )}
         />
 
         <div
           className={cn(
-            "absolute bottom-16 right-20 h-28 w-28 rounded-full border border-primary/12",
+            "absolute bottom-9 right-16 h-20 w-20 rounded-full border border-primary/12 xl:bottom-12 xl:right-[4.5rem] xl:h-24 xl:w-24",
             tone.ring,
           )}
         />
 
         <div
           className={cn(
-            "absolute right-20 top-16 rounded-[1.75rem] border border-primary/12 bg-white/78 px-4 py-4 shadow-[0_20px_48px_-40px_rgba(15,23,42,0.35)] backdrop-blur-sm",
+            "absolute right-12 top-4 rounded-[1.5rem] border border-primary/12 bg-white/78 px-3 py-3 shadow-[0_20px_48px_-40px_rgba(15,23,42,0.35)] backdrop-blur-sm xl:right-16 xl:top-5 xl:px-4 xl:py-4",
             tone.panel,
           )}
         >
@@ -120,7 +119,7 @@ export default function PortalHeroGraphic({
 
         <div
           className={cn(
-            "absolute bottom-[4.8rem] right-28 rounded-[1.4rem] border border-primary/10 bg-white/74 px-4 py-3 shadow-[0_16px_40px_-34px_rgba(15,23,42,0.32)] backdrop-blur-sm",
+            "absolute bottom-[3.2rem] right-20 rounded-[1.15rem] border border-primary/10 bg-white/74 px-3 py-2.5 shadow-[0_16px_40px_-34px_rgba(15,23,42,0.32)] backdrop-blur-sm xl:bottom-[4.2rem] xl:right-24 xl:px-4 xl:py-3",
             tone.panel,
           )}
         >
@@ -137,7 +136,7 @@ export default function PortalHeroGraphic({
 
         <div
           className={cn(
-            "absolute bottom-28 right-0 grid grid-cols-4 gap-2",
+            "absolute bottom-[4.5rem] right-1 grid grid-cols-4 gap-1.5 xl:bottom-[5.8rem] xl:right-0 xl:gap-2",
             tone.detail,
           )}
         >
