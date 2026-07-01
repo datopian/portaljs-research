@@ -15,7 +15,16 @@ export default function SiteDemoBanner() {
             Demo
           </span>
           <p className="text-sm font-medium text-foreground/85">
-            This site is a demo for research data portals.
+            This site is a{" "}
+            <a
+              href="https://portaljs.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline decoration-primary/35 underline-offset-4 transition-colors hover:text-primary hover:decoration-primary"
+            >
+              PortalJS
+            </a>{" "}
+            demo for research data portals.
           </p>
         </div>
       </Container>
