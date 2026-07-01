@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { CardTitle } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { QUERYLESS_OPEN_EVENT, querylessConfig } from "@/lib/queryless";
+import { getCannedResponse } from "@/lib/queryless-canned";
 import { locales } from "@/i18n/config";
 import VegaSpecRenderer, { parseVegaSpecText } from "./VegaSpecRenderer";
 
@@ -41,6 +42,9 @@ const QUERYLESS_DAILY_LIMIT_STORAGE_KEY = "queryless:daily-limit";
 const QUERYLESS_RATE_LIMIT_MAX_REQUESTS = 4;
 const QUERYLESS_RATE_LIMIT_WINDOW_MS = 60_000;
 const QUERYLESS_DAILY_LIMIT_MAX_REQUESTS = 20;
+// How long the "Thinking..." indicator shows before a pre-calculated
+// (simulated) answer is revealed for the home-page suggested-question chips.
+const QUERYLESS_SIMULATED_THINKING_MS = 2000;
 
 function createSessionId() {
   return `queryless-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
@@ -526,6 +530,7 @@ export default function QuerylessAssistant() {
   const previousMessageCountRef = useRef(0);
   const shouldAutoScrollRef = useRef(true);
   const streamRafRef = useRef<number | null>(null);
+  const simulateTimeoutRef = useRef<number | null>(null);
   const streamedAnswerRef = useRef("");
   const sessionIdRef = useRef<string>(createSessionId());
   const lastContextPathRef = useRef<string | null>(null);
@@ -783,6 +788,41 @@ export default function QuerylessAssistant() {
     }
   }, [context.pageDirective, context.path, input, isSending, messages, scrollMessagesToBottom]);
 
+  // Simulate an AI response for the home-page suggested-question chips: show the
+  // user's question, display the "Thinking..." indicator for a short delay, then
+  // reveal a pre-calculated answer. No API request is made and usage limits are
+  // not touched, since nothing is actually sent upstream.
+  const simulateMessage = useCallback(
+    (question: string, answer: string) => {
+      const trimmed = question.trim();
+      if (!trimmed || isSending) return;
+
+      hasExchangeSinceLastPageChangeRef.current = true;
+      shouldAutoScrollRef.current = true;
+      const assistantMessageId = `assistant-${Date.now()}`;
+
+      setMessages((prev) => [
+        ...prev,
+        { id: `user-${Date.now()}`, role: "user", content: trimmed },
+        { id: assistantMessageId, role: "assistant", content: "" },
+      ]);
+      setInput("");
+      setError(null);
+      setIsSending(true);
+
+      simulateTimeoutRef.current = window.setTimeout(() => {
+        setMessages((prev) =>
+          prev.map((message) =>
+            message.id === assistantMessageId ? { ...message, content: answer } : message
+          )
+        );
+        setIsSending(false);
+        simulateTimeoutRef.current = null;
+      }, QUERYLESS_SIMULATED_THINKING_MS);
+    },
+    [isSending]
+  );
+
   useEffect(() => {
     const handleOpenQueryless = (event: Event) => {
       const customEvent = event as CustomEvent<{
@@ -799,8 +839,13 @@ export default function QuerylessAssistant() {
       customEvent.preventDefault();
 
       if (customEvent.detail?.autoSubmit && prompt) {
+        const cannedAnswer = getCannedResponse(prompt);
         window.setTimeout(() => {
-          void sendMessage(prompt);
+          if (cannedAnswer) {
+            simulateMessage(prompt, cannedAnswer);
+          } else {
+            void sendMessage(prompt);
+          }
         }, 0);
       }
     };
@@ -809,7 +854,7 @@ export default function QuerylessAssistant() {
     return () => {
       window.removeEventListener(QUERYLESS_OPEN_EVENT, handleOpenQueryless as EventListener);
     };
-  }, [sendMessage]);
+  }, [sendMessage, simulateMessage]);
 
   useEffect(() => {
     if (!rateLimitRetryAt && !rateLimitMessage) return;
@@ -982,6 +1027,10 @@ export default function QuerylessAssistant() {
       if (streamRafRef.current !== null) {
         window.cancelAnimationFrame(streamRafRef.current);
         streamRafRef.current = null;
+      }
+      if (simulateTimeoutRef.current !== null) {
+        window.clearTimeout(simulateTimeoutRef.current);
+        simulateTimeoutRef.current = null;
       }
     },
     []

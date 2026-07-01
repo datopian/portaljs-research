@@ -12,6 +12,7 @@ import { getAllGroups } from "@/lib/ckan/group";
 import { getAllReports } from "@/lib/reports";
 import { cn } from "@/lib/utils";
 import { isQuerylessEnabled } from "@/lib/queryless";
+import { QUERYLESS_SUGGESTED_PROMPTS } from "@/lib/queryless-canned";
 import { toPublicGroupSlug } from "@/lib/portal-name";
 import { ArrowRight, Code2, FolderKanban, Mail } from "lucide-react";
 import { Metadata } from "next";
@@ -40,11 +41,7 @@ export default async function Home() {
   const apiDocsUrl = "https://docs.ckan.org/en/2.11/api/index.html";
   const requestDataHref =
     "mailto:data@example.com?subject=Open%20Data%20Request";
-  const suggestedPrompts = [
-    "How has global temperature changed since 1980?",
-    "Compare atmospheric CO2 trends since 2000",
-    "Which countries spend most on pharmaceuticals?",
-  ];
+  const suggestedPrompts = QUERYLESS_SUGGESTED_PROMPTS;
 
   const [featuredDatasetsResult, statsResult, visualizationsResult, allGroups] =
     await Promise.all([
