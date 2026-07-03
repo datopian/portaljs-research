@@ -281,28 +281,22 @@ export default async function Home() {
                     } as CSSProperties
                   }
                 >
-                  <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[color:color-mix(in_srgb,var(--brand-accent)_4%,white)] text-foreground shadow-[0_18px_36px_-30px_rgba(15,23,42,0.2)]">
-                    {imageUrl ? (
-                      <div className="flex h-full w-full items-center justify-center">
-                        <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[color:var(--brand-accent)] shadow-[var(--shadow-soft)] sm:h-16 sm:w-16 sm:rounded-2xl">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={imageUrl}
-                            alt={groupTitle}
-                            width={256}
-                            height={256}
-                            className="h-full w-full object-contain p-2 sm:p-3"
-                          />
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center">
-                        <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[color:var(--brand-accent)] shadow-[var(--shadow-soft)] sm:h-16 sm:w-16 sm:rounded-2xl">
-                          <FolderKanban className="size-6 sm:size-8" />
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                  {imageUrl ? (
+                    <div className="flex h-16 w-16 items-center justify-center">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={imageUrl}
+                        alt={groupTitle}
+                        width={256}
+                        height={256}
+                        className="h-16 w-16 rounded-2xl object-contain drop-shadow-[0_12px_24px_rgba(15,23,42,0.12)]"
+                      />
+                    </div>
+                  ) : (
+                    <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-white text-[color:var(--brand-accent)] shadow-[0_12px_24px_rgba(15,23,42,0.12)]">
+                      <FolderKanban className="size-8" />
+                    </div>
+                  )}
 
                   <div className="mt-4 flex flex-1 flex-col">
                     <h3 className="line-clamp-2 text-[1.05rem] font-semibold leading-6 tracking-tight text-foreground">

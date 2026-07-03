@@ -99,21 +99,19 @@ export default async function TopicsPage({ searchParams }: Props) {
                   <div className="relative aspect-square w-22 shrink-0 border-r border-[color:var(--border)] bg-[color:color-mix(in_srgb,var(--brand-accent)_4%,white)] p-2.5 sm:w-32 sm:p-4">
                     {imageUrl ? (
                       <div className="flex h-full w-full items-center justify-center">
-                        <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[color:var(--brand-accent)] shadow-[var(--shadow-soft)] sm:h-16 sm:w-16 sm:rounded-2xl">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={imageUrl}
-                            alt={topicTitle}
-                            width={256}
-                            height={256}
-                            className="h-full w-full object-contain p-2 sm:p-3"
-                          />
-                        </div>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={imageUrl}
+                          alt={topicTitle}
+                          width={256}
+                          height={256}
+                          className="h-16 w-16 rounded-xl object-contain drop-shadow-[0_12px_24px_rgba(15,23,42,0.12)] sm:h-24 sm:w-24 sm:rounded-2xl"
+                        />
                       </div>
                     ) : (
                       <div className="flex h-full w-full items-center justify-center">
-                        <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-white text-[color:var(--brand-accent)] shadow-[var(--shadow-soft)] sm:h-16 sm:w-16 sm:rounded-2xl">
-                          <FolderKanban className="size-6 sm:size-8" />
+                        <div className="inline-flex h-16 w-16 items-center justify-center rounded-xl bg-white text-[color:var(--brand-accent)] shadow-[0_12px_24px_rgba(15,23,42,0.12)] sm:h-24 sm:w-24 sm:rounded-2xl">
+                          <FolderKanban className="size-7 sm:size-10" />
                         </div>
                       </div>
                     )}
