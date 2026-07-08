@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import Papa from "papaparse";
+import { parseCsvRows, unparseCsvRows } from "@/lib/csv";
 import { useResourceData } from "./DataProvider";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -9,18 +9,7 @@ import { useTranslations } from "next-intl";
 type CsvRow = Record<string, string | number | null | undefined>;
 
 function parseCsv(data: string): CsvRow[] {
-  const result = Papa.parse<CsvRow>(data, {
-    header: true,
-    skipEmptyLines: true,
-  });
-
-  if (result.errors.length > 0) {
-    throw new Error(
-      `CSV parsing errors: ${result.errors.map((e) => e.message).join(", ")}`
-    );
-  }
-
-  return result.data;
+  return parseCsvRows<CsvRow>(data);
 }
 
 export default function SearchDataForm() {
@@ -68,7 +57,7 @@ export default function SearchDataForm() {
           )
         );
 
-        const csvString = Papa.unparse(matchingRows);
+        const csvString = unparseCsvRows(matchingRows);
         context.setTableData(csvString);
         context.setCurrentPage(1);
       } catch (err) {
@@ -89,7 +78,7 @@ export default function SearchDataForm() {
       const baseRows = await ensureRows();
       if (!baseRows) return;
 
-      const csvString = Papa.unparse(baseRows);
+      const csvString = unparseCsvRows(baseRows);
       context.setTableData(csvString);
       context.setCurrentPage(1);
     } catch (err) {
