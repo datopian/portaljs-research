@@ -77,7 +77,7 @@ const SLIDES: SlideDefinition[] = [
       limit: 8,
       xLabel: "Total emissions",
       yLabel: "Country",
-      height: 270,
+      height: 330,
     },
   },
 ];

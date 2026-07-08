@@ -103,21 +103,27 @@ export default function HomeDataSignalCarouselClient({
 
           {hasMultipleSlides && (
             <div className="mt-auto flex items-center justify-between gap-4 pt-5">
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1">
                 {slides.map((slide, index) => (
                   <button
                     key={slide.id}
                     type="button"
                     onClick={() => goTo(index)}
                     className={cn(
-                      "h-2.5 rounded-full transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--brand-accent)] focus-visible:ring-offset-2",
-                      index === activeIndex
-                        ? "w-7 bg-[color:var(--brand-accent)]"
-                        : "w-2.5 bg-muted-foreground/25 hover:bg-muted-foreground/45",
+                      "group inline-flex h-6 w-6 items-center justify-center rounded-full transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--brand-accent)] focus-visible:ring-offset-2",
                     )}
                     aria-label={`Show ${slide.title}`}
                     aria-current={index === activeIndex}
-                  />
+                  >
+                    <span
+                      className={cn(
+                        "h-2.5 rounded-full transition-all duration-300",
+                        index === activeIndex
+                          ? "w-7 bg-[color:var(--brand-accent)]"
+                          : "w-2.5 bg-muted-foreground/25 group-hover:bg-muted-foreground/45",
+                      )}
+                    />
+                  </button>
                 ))}
               </div>
 

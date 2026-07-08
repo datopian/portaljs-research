@@ -60,14 +60,14 @@ function bucketValue(value: unknown, groupBy: ResourceChartConfig["groupBy"]): s
   return `${year}-${month}-${day}`;
 }
 
-function aggregate(acc: Accumulator, aggregation: ResourceChartAggregation): number {
+function aggregate(acc: Accumulator, aggregation: ResourceChartAggregation): number | null {
   if (aggregation === "count") return acc.count;
+  if (aggregation === "min") return acc.values.length > 0 ? Math.min(...acc.values) : null;
+  if (aggregation === "max") return acc.values.length > 0 ? Math.max(...acc.values) : null;
   if (acc.values.length === 0) return 0;
   if (aggregation === "avg") {
     return acc.values.reduce((sum, value) => sum + value, 0) / acc.values.length;
   }
-  if (aggregation === "min") return Math.min(...acc.values);
-  if (aggregation === "max") return Math.max(...acc.values);
   return acc.values.reduce((sum, value) => sum + value, 0);
 }
 
@@ -97,6 +97,7 @@ function sortPoints<T extends { label: string; value: number }>(
 function limitPoints<T>(points: T[], limit: number | undefined, preserveRange: boolean): T[] {
   if (!limit || limit <= 0 || points.length <= limit) return points;
   if (!preserveRange) return points.slice(0, limit);
+  if (limit === 1) return points.slice(0, 1);
 
   const step = (points.length - 1) / (limit - 1);
   const sampled = Array.from({ length: limit }, (_, index) => points[Math.round(index * step)]);
@@ -137,7 +138,7 @@ export function buildResourceChartState(
 
   const points = Array.from(groups.values())
     .map((acc) => ({ label: acc.label, value: aggregate(acc, aggregation) }))
-    .filter((point) => Number.isFinite(point.value));
+    .filter((point): point is { label: string; value: number } => Number.isFinite(point.value));
 
   if (points.length === 0) {
     return { status: "empty", message: "No chartable values were found for this resource." };
