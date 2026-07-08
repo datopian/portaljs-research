@@ -1,4 +1,5 @@
 import DatasetCard from "@/components/package/dataset/DatasetCard";
+import HomeDataSignalCarousel from "@/components/home/HomeDataSignalCarousel";
 import HomePromptChips from "@/components/home/HomePromptChips";
 import ReportCard from "@/components/reports/ReportCard";
 import SearchForm from "@/components/package/search/SearchForm";
@@ -43,8 +44,12 @@ export default async function Home() {
     "mailto:data@example.com?subject=Open%20Data%20Request";
   const suggestedPrompts = QUERYLESS_SUGGESTED_PROMPTS;
 
-  const [featuredDatasetsResult, statsResult, visualizationsResult, allGroups] =
-    await Promise.all([
+  const [
+    featuredDatasetsResult,
+    statsResult,
+    visualizationsResult,
+    allGroups,
+  ] = await Promise.all([
       searchDatasets({
         options: {
           limit: 4,
@@ -188,6 +193,8 @@ export default async function Home() {
               ))}
             </div>
           </div>
+
+          <HomeDataSignalCarousel />
         </Container>
       </section>
 

@@ -5,7 +5,6 @@ import {
   DatasetListQueryOptions,
   PackageSearchOptions,
   PackageSearchResponse,
-  Resource,
   Tag,
 } from "@/schemas/ckan/dataset.interface";
 import {
@@ -16,6 +15,7 @@ import { Group } from "@/schemas/ckan/group.interface";
 import { Organization } from "@/schemas/ckan/organization.interface";
 import { User } from "@/schemas/ckan/user.interface";
 import { ISR_REVALIDATE_SECONDS } from "../isr";
+import { getResourceMetadata as fetchResourceMetadata } from "./resource";
 
 export default class CKAN {
   DMS: string;
@@ -380,13 +380,9 @@ export default class CKAN {
   }
 
   async getResourceMetadata(resourceId: string) {
-    const response = await fetchRetry(
-      `${this.DMS}/api/3/action/resource_show?id=${resourceId}`,
-      3
-    );
-    const responseData = await response.json();
-    const resourceMetadata: Resource = responseData.result;
-    return resourceMetadata;
+    return fetchResourceMetadata(resourceId, {
+      actionUrl: `${this.DMS}/api/3/action`,
+    });
   }
 
   async getResourceInfo(resourceId: string) {

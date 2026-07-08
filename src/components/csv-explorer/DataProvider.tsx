@@ -11,7 +11,8 @@ import React, {
   useRef,
   useState,
 } from "react";
-import Papa from "papaparse";
+import { parseCsvRows } from "@/lib/csv";
+import type { ParseMeta, ParseResult } from "papaparse";
 import { isValidDate } from "./utils";
 
 export type SortConfig =
@@ -82,12 +83,15 @@ export const useResourceDataSafe = () => {
   return context;
 };
 
-const parseData = (stringData: string): Papa.ParseResult<RowData> => {
-  return Papa.parse<RowData>(stringData, {
-    header: true,
-    skipEmptyLines: true,
-    dynamicTyping: true,
-  });
+const parseData = (stringData: string): ParseResult<RowData> => {
+  return {
+    data: parseCsvRows<RowData>(stringData, {
+      dynamicTyping: true,
+      throwOnErrors: false,
+    }),
+    errors: [],
+    meta: {} as ParseMeta,
+  };
 };
 
 export const DataStateProvider = ({
