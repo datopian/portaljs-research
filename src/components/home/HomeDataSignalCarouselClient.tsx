@@ -92,7 +92,7 @@ export default function HomeDataSignalCarouselClient({
 
                 <div className="mt-5 flex min-h-[4.25rem] flex-wrap content-start gap-2 text-xs font-medium text-muted-foreground sm:min-h-8">
                   {slide.badges.map((badge) => (
-                    <span key={badge} className="rounded-full bg-muted px-3 py-1">
+                    <span key={badge} className="rounded-full bg-gray-100 px-3 py-1">
                       {badge}
                     </span>
                   ))}
