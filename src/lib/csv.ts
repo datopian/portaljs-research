@@ -2,17 +2,22 @@ import Papa from "papaparse";
 
 export type CsvRow = Record<string, unknown>;
 
+type ParseCsvRowsOptions<T> = Papa.ParseConfig<T> & {
+  throwOnErrors?: boolean;
+};
+
 export function parseCsvRows<T extends CsvRow = Record<string, string>>(
   content: string,
-  options: Papa.ParseConfig<T> = {},
+  options: ParseCsvRowsOptions<T> = {},
 ): T[] {
+  const { throwOnErrors = true, ...parseOptions } = options;
   const result = Papa.parse<T>(content, {
     header: true,
     skipEmptyLines: true,
-    ...options,
+    ...parseOptions,
   });
 
-  if (result.errors.length > 0) {
+  if (throwOnErrors && result.errors.length > 0) {
     throw new Error(
       `CSV parsing errors: ${result.errors.map((error) => error.message).join(", ")}`,
     );

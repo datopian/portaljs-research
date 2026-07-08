@@ -87,6 +87,7 @@ const parseData = (stringData: string): ParseResult<RowData> => {
   return {
     data: parseCsvRows<RowData>(stringData, {
       dynamicTyping: true,
+      throwOnErrors: false,
     }),
     errors: [],
     meta: {} as ParseMeta,
